@@ -81,7 +81,20 @@ npm: 9.1.2
 
 <br>
 
-#### CI
+#### protect branch
+
+Github 上で main branch を protect 状態にする。
+
+<br>
+
+#### vscode plugin
+
+- IntelliJ IDEA Keybindings  
+   ※ InteliJ と同じ keymap にしてくれる。
+
+<br><br>
+
+## CI
 
 他からコピペで良い。テストが一つでもないと失敗する点に注意。
 
@@ -116,12 +129,3 @@ jobs:
           # ※ false だったとしても、test でのエラーは Actions は失敗する。
           CI: false
 ```
-
-<br>
-
-#### vscode plugin
-
-- IntelliJ IDEA Keybindings  
-   ※ InteliJ と同じ keymap にしてくれる。
-
-<br><br>
