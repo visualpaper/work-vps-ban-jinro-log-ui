@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorPage } from './pages/ErrorPage/ErrorPage'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
