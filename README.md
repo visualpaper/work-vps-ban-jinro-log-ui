@@ -92,6 +92,106 @@ Github 上で main branch を protect 状態にする。
 - IntelliJ IDEA Keybindings  
    ※ InteliJ と同じ keymap にしてくれる。
 
+<br>
+
+#### formatter
+
+- npm i -D prettier  
+  ※ フォーマッタを担当するが、lint は担当しない。  
+  ※ prettier ignore および rc ファイルを用意  
+
+* package json への追加  
+  ※ "format": "prettier --write ./{src,server}/**/*.{ts,tsx}" を npm script に設定
+
+```
+{
+  # 行数制限は 80
+  "printWidth": 80,
+
+  # タブ数は 2
+  "tabWidth": 2,
+
+  # 文字列はシングルクォートにする
+  "singleQuote": true,
+
+  # ステートメントの最後にセミコロンを追加しない
+  # ※ false の場合、セミコロンが無いとエラーになる箇所にだけセミコロンを追加する
+  "semi": false
+}
+```
+
+<br>
+
+#### lint
+
+- npm i -D eslint-config-prettier
+- npm i -D @typescript-eslint/parser
+- npm i -D @typescript-eslint/eslint-plugin@5.62.0  
+- npm i -D eslint-plugin-unused-imports  
+  ※ フォーマッタと lint を担当する。  
+  ※ cra にデフォルトで eslint は入っているので、prettier との連携用 plugin のみをインストールする。  
+  ※ eslint ignore と rc ファイルを用意 (.eslintrc.yml の内容を見て、必要な変更を行う。ecmaVersion ぐらいのはず)  
+
+* package json への追加  
+  ※ "lint": "eslint --fix ./src/**/*.{ts,tsx}" を npm script に設定
+
+<br>
+
+#### dummy server
+
+* npm i -D express
+* npm i -D @types/express  
+  ※ package.json に express server へのプロキシを行うことで SameOrigin 問題を回避して接続できる。  
+     (localhost:3000 -> localhost:5000 などの場合、port が異なるため Cookie を参照できないなど CORS 制約が起きて通信できないので proxy している。)  
+  ※ format はかけるが lint はかけていない (eslintrc.yaml ファイルの修正が必要になるため)  
+  ※ 以下の設定は npm run start (development env) で利用される。npm run build (prod env) では利用されない機能となる。  
+     (参照) https://create-react-app.dev/docs/proxying-api-requests-in-development/
+
+* npm i -D graphql-http
+* npm i -D @graphql-tools/graphql-file-loader
+* npm i -D @graphql-tools/load
+* npm i -D @graphql-tools/schema  
+  ※ graphql-http と express を元に、schema.graphql より schema を定義、resolver のみ自作する形をとっている。
+  (参照) https://the-guild.dev/graphql/tools/docs/schema-loading
+
+* npm i -D ts-node
+* npm i -D nodemon  
+  ※ コード変更後、自動で再起動する。開発時に利用する。
+
+* server 準備  
+  ※ 他プロジェクトからコピペ
+
+* package json への追加  
+  ※ "server": "nodemon --exec npx ts-node ./server/index.ts" を npm script に設定  
+  ※ 以下を package.json に追加
+
+```
+  "homepage": "/",
+  "proxy": "http://localhost:5000"
+```
+
+<br>
+
+#### jest
+
+* npm i -D msw  
+  ※ mock server 用  
+  ※ 他、UT/IT を行う上で必要な jest 及び react-testing-library は CRA に入っているため不要
+
+* package json への追加  
+  ※ 設定値の意味などは https://jestjs.io/ja/docs/configuration を参照。
+
+```
+  "jest": {
+    "testMatch": [
+      "**/*.test.{ts,tsx}"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+    ]
+  }
+```
+
 <br><br>
 
 ## CI
