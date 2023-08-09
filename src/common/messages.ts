@@ -1,5 +1,6 @@
 export const ERROR_CODE = {
-  SERVER_UNEXPECTED: 'BASE-0000',
+  SERVER_UNEXPECTED: '',
+  CONFLICT: '',
   CLIENT_ERROR: 'CLIENT_ERROR', // これは内部用
 }
 
@@ -10,6 +11,7 @@ export const COMMON_MESSAGES = {
 }
 
 export const ERROR_MESSAGES = {
+  [ERROR_CODE.CONFLICT]: 'Conflict',
   [ERROR_CODE.SERVER_UNEXPECTED]: 'Server unexpected',
   [ERROR_CODE.CLIENT_ERROR]: 'Client Erorr',
 }
