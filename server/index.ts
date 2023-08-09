@@ -17,10 +17,8 @@ const schema = loadSchemaSync('schema.graphql', {
 })
 
 const resolvers = {
-  Query: {
-  },
-  Mutation: {
-  },
+  Query: {},
+  Mutation: {},
 }
 
 // You can add resolvers to that schema

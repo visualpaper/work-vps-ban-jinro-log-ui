@@ -1,0 +1,24 @@
+# 本来であれば、GraphQL サーバ側と共用の graphql ファイルを指定し利用したほうが望ましい
+schema: "./schema/schema.graphql"
+
+# ここで利用する具体的な GQL 定義をすることで hook を作成できるようにしている。
+# ※ type や query/mutation などの定義でなく、実際に利用するクエリそのものである点に注意
+# ※ なので、hook 不要であれば、本 documents 欄はなくても動く。
+documents: ["./schema/**/*.graphql"]
+generates:
+  # server 側で type だけ利用するので用意している。
+  ./server/types/generated/types.ts:
+    plugins:
+      - typescript
+
+  ./src/types/generated/query.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      # fetcher は GraphQL 用に graphql-request を利用している。
+      # ※ fetch でも良いとは思うのだが、細かい制御がよりやりやすそうと考え入れている。
+      fetcher: graphql-request
+      isReactHook: true
+      exposeQueryKeys: true
