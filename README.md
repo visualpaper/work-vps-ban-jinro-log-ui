@@ -192,6 +192,106 @@ Github 上で main branch を protect 状態にする。
   }
 ```
 
+<br>
+
+#### env
+
+他プロジェクトから env / production / test それぞれ持ってくる。
+
+<br><br>
+
+## React
+
+### router
+
+- npm i react-router-dom
+- npm i -D @types/react-router-dom
+
+<br>
+
+### API Client
+
+#### graphql
+
+- npm i graphql
+
+<br>
+
+#### react-query
+
+- npm i react-query
+- npm i -D @tanstack/react-query
+
+※ API 取得・更新処理に必要なリトライ、エラーハンドリングなど含めスマートに記載できる。
+※ キャッシュをデフォルトで持ち、メモリ管理なども良しなに実施してくれる。
+※ デフォルトの fetcher は fetch を利用する。
+
+<br>
+
+#### graphql-request
+
+- npm i graphql-request
+
+※ fetcher は GraphQL 用に graphql-request を利用している。
+※ fetch でも良いとは思うのだが、Graphql Error を扱いやすいので入れている。
+
+<br>
+
+#### graphql codegen with react-query
+
+- npm i -D @graphql-codegen/cli
+- npm i -D @graphql-codegen/typescript
+- npm i -D @graphql-codegen/typescript-operations
+- npm i -D @graphql-codegen/typescript-react-query  
+  ※ schema query / mutation / subscribe の型定義および hook を生成する。  
+  ※ 実際に投げる query/mutation/subscribe を定義し codegen する。  
+  ※ schema フォルダを別プロジェクトからコピペする。  
+  ※ `import { RequestInit } from 'graphql-request/dist/types.dom'` という行があるとエラーになる都合上、生成後に削除している (2023/06 ～)  
+
+合わせて package.json 上の build ステップを以下のように変更
+
+```
+    "codegen": "graphql-codegen",
+```
+
+<br>
+
+### form
+
+- npm i react-hook-form  
+- npm i @tanstack/react-table  
+
+<br>
+
+### error handling
+
+- npm i react-error-boundary  
+  ※ https://github.com/bvaughn/react-error-boundary が公式そのまま使うより使いやすいので使っている。
+
+<br><br>
+
+## build
+
+- npm run codegen  
+  ※ GraphQL Codegen  
+  ※ https://github.com/dotansimha/graphql-code-generator/issues/9440 都合、2023/07 現在一行削除し運用している
+
+- npm run format  
+  ※ prettier による自動フォーマッタ適用
+
+- npm run lint  
+  ※ eslint による lint 実施
+
+- npm run build  
+  ※ ビルド
+
+- npm run test  
+  ※ jest 実行  
+  ※ npm run test -- ${path} で単一試験も可能
+
+- npm run server  
+  ※ nodemon で dummy server 起動
+
 <br><br>
 
 ## CI
