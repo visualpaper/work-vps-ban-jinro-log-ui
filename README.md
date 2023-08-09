@@ -62,3 +62,66 @@ npm: 9.1.2
   ※ npm audix が必要であれば実施  
   ※ high のものは消したいが、この時点で出てくるものは仕方ないとして見ている。  
   ※ この時点で `npm i -D @babel/plugin-proposal-private-property-in-object` を入れるようメッセージが出たので入れている (2023/06 ~ )
+
+<br>
+
+#### tsconfig settings
+
+- compilerOptions.target を最新の ECMAScript バージョンにする  
+  ※ このバージョンで js を出力するという意味を指す。  
+  ※ 新規に作る場合、制約などなければ ECMA Script の[最新バージョン](https://www.typescriptlang.org/tsconfig#target)を指定する。
+
+```
+{
+  "compilerOptions": {
+    "target": "es2022",
+
+  (省略)
+```
+
+<br>
+
+#### CI
+
+他からコピペで良い。テストが一つでもないと失敗する点に注意。
+
+```
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+on:
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: "18.x"
+      - name: CI
+        working-directory: ./
+        run: |
+          npm ci
+          npm run format
+          npm run lint
+          npm run build
+          npm run test
+        env:
+          # false の場合、worning レベルの場合はエラーにしない。
+          # ※ false だったとしても、test でのエラーは Actions は失敗する。
+          CI: false
+```
+
+<br>
+
+#### vscode plugin
+
+- IntelliJ IDEA Keybindings  
+   ※ InteliJ と同じ keymap にしてくれる。
+
+<br><br>
