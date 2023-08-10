@@ -270,6 +270,21 @@ Github 上で main branch を protect 状態にする。
 
 <br><br>
 
+## UI
+
+### Material UI
+
+- npm i @mui/material @emotion/react @emotion/styled  
+- npm i @fontsource/roboto  
+  ※ Material UI ではデフォルトで本 roboto フォントを利用している都合必要。  
+  ※ CDN 参照も可能だが、本番環境でやらないほうが良いっぽいので npm インストールのみとしている。  
+
+- npm i @mui/icons-material  
+  ※ icon 関連を利用する場合に必要になる。  
+  ※ CDN 参照も可能だが、本番環境でやらないほうが良いっぽいので npm インストールのみとしている。
+
+<br><br>
+
 ## build
 
 - npm run codegen  

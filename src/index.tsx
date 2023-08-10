@@ -4,6 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorPage } from './pages/ErrorPage/ErrorPage'
+import { App } from './pages/App/App'
+import Router from './router'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -27,7 +29,11 @@ root.render(
   <React.StrictMode>
     <BrowserRouter basename={process.env.REACT_APP_BASE_URL}>
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundary FallbackComponent={ErrorPage}></ErrorBoundary>
+        <ErrorBoundary FallbackComponent={ErrorPage}>
+          <App>
+            <Router />
+          </App>
+        </ErrorBoundary>
       </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>,
