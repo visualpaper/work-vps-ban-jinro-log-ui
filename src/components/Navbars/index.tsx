@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, Toolbar, Typography } from '@mui/material'
+import { AppBar, Box, Button, Container, Toolbar } from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -6,29 +6,49 @@ export const Navbars: React.FC<{}> = () => {
   const navigate = useNavigate()
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar color="default" position="fixed">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            人狼通報ログまとめ
-          </Typography>
-          <Button color="inherit">About</Button>
-        </Toolbar>
+    <>
+      <AppBar color="default">
+        <Container maxWidth="xl">
+          <Toolbar>
+            <Button
+              sx={{
+                fontSize: '20px',
+                mr: 5,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+              onClick={() => {
+                navigate('/')
+              }}
+            >
+              人狼通報ログまとめ
+            </Button>
+            <Box display="flex" flexGrow={1}>
+              <Button
+                sx={{
+                  fontSize: '17px',
+                  color: 'inherit',
+                  textTransform: 'none',
+                }}
+              >
+                Search
+              </Button>
+            </Box>
+            <Button
+              sx={{
+                mr: 5,
+                fontSize: '17px',
+                color: 'inherit',
+                textTransform: 'none',
+              }}
+            >
+              About
+            </Button>
+          </Toolbar>
+        </Container>
       </AppBar>
       <Toolbar />
-    </Box>
+    </>
   )
 }

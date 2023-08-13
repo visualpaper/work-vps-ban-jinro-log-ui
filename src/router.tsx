@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { ErrorPage } from './pages/ErrorPage/ErrorPage'
+import { DashboardPage } from './pages/DashboardPage/DashboardPage'
 
 export default function Router() {
   return (
@@ -9,7 +9,7 @@ export default function Router() {
         path="/"
         element={<Navigate to="/dashboard" replace={true} />}
       />
-      <Route path="/dashboard" element={<ErrorPage />} />
+      <Route path="/dashboard" element={<DashboardPage />} />
     </Routes>
   )
 }
