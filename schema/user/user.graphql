@@ -1,0 +1,6 @@
+mutation initialize {
+  initialize {
+    id
+    villageNumbers
+  }
+}

@@ -1,0 +1,12 @@
+type User {
+  id: ID!
+  villageNumbers: [Int]!
+}
+
+type Query {
+  _dummy: String
+}
+
+type Mutation {
+  initialize: User!
+}
