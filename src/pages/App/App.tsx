@@ -34,7 +34,7 @@ export const App: React.FC<{ children: any }> = ({ children }) => {
   }
 
   // Navbar は "<Container maxWidth="xl">" とし body より大きくしている。
-  // body は以下 window の幅段階的に幅が変化するようにしている。
+  // body は以下 window の幅段階的に幅が変化するように top に <Container fixed> を設定している。
   // (参照) https://mui.com/material-ui/customization/breakpoints/
   return (
     <UserProvider loginUser={loginUser || null} setLoginUser={setLoginUser}>

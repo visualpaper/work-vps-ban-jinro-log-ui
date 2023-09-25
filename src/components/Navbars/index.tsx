@@ -1,6 +1,28 @@
-import { AppBar, Box, Button, Container, Toolbar } from '@mui/material'
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  SxProps,
+  Theme,
+  Toolbar,
+} from '@mui/material'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+
+const titleStyle: SxProps<Theme> = {
+  mr: 5,
+  fontSize: '20px',
+  letterSpacing: '.3rem',
+  color: 'inherit',
+  textDecoration: 'none',
+}
+
+const buttonStyle: SxProps<Theme> = {
+  fontSize: '17px',
+  color: 'inherit',
+  textTransform: 'none',
+}
 
 export const Navbars: React.FC<{}> = () => {
   const navigate = useNavigate()
@@ -11,13 +33,7 @@ export const Navbars: React.FC<{}> = () => {
         <Container maxWidth="xl">
           <Toolbar>
             <Button
-              sx={{
-                fontSize: '20px',
-                mr: 5,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
+              sx={titleStyle}
               onClick={() => {
                 navigate('/')
               }}
@@ -25,26 +41,9 @@ export const Navbars: React.FC<{}> = () => {
               人狼通報ログまとめ
             </Button>
             <Box display="flex" flexGrow={1}>
-              <Button
-                sx={{
-                  fontSize: '17px',
-                  color: 'inherit',
-                  textTransform: 'none',
-                }}
-              >
-                Search
-              </Button>
+              <Button sx={buttonStyle}>Search</Button>
             </Box>
-            <Button
-              sx={{
-                mr: 5,
-                fontSize: '17px',
-                color: 'inherit',
-                textTransform: 'none',
-              }}
-            >
-              About
-            </Button>
+            <Button sx={{ ...buttonStyle, mr: 5 }}>About</Button>
           </Toolbar>
         </Container>
       </AppBar>
