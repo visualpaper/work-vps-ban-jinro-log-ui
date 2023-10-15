@@ -46,13 +46,27 @@ export type User = {
 export type Village = {
   __typename?: 'Village'
   bans: Array<VillageBans>
+  cast: VillageCast
   id: Scalars['ID']['output']
   name: Scalars['String']['output']
   people: Scalars['Int']['output']
   url: Scalars['String']['output']
 }
 
-export enum VillageBanPosition {
+export type VillageBans = {
+  __typename?: 'VillageBans'
+  position: VillagePosition
+  trip: Scalars['String']['output']
+}
+
+export enum VillageCast {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D',
+}
+
+export enum VillagePosition {
   Apostate = 'APOSTATE',
   Cat = 'CAT',
   Fanatic = 'FANATIC',
@@ -64,10 +78,4 @@ export enum VillageBanPosition {
   Seer = 'SEER',
   Villager = 'VILLAGER',
   Wolf = 'WOLF',
-}
-
-export type VillageBans = {
-  __typename?: 'VillageBans'
-  position: VillageBanPosition
-  trip: Scalars['String']['output']
 }

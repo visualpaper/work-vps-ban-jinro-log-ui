@@ -43,13 +43,27 @@ export type User = {
 export type Village = {
   __typename?: 'Village';
   bans: Array<VillageBans>;
+  cast: VillageCast;
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
   people: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
 
-export enum VillageBanPosition {
+export type VillageBans = {
+  __typename?: 'VillageBans';
+  position: VillagePosition;
+  trip: Scalars['String']['output'];
+};
+
+export enum VillageCast {
+  A = 'A',
+  B = 'B',
+  C = 'C',
+  D = 'D'
+}
+
+export enum VillagePosition {
   Apostate = 'APOSTATE',
   Cat = 'CAT',
   Fanatic = 'FANATIC',
@@ -63,12 +77,6 @@ export enum VillageBanPosition {
   Wolf = 'WOLF'
 }
 
-export type VillageBans = {
-  __typename?: 'VillageBans';
-  position: VillageBanPosition;
-  trip: Scalars['String']['output'];
-};
-
 export type InitializeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -77,7 +85,7 @@ export type InitializeMutation = { __typename?: 'Mutation', initialize: { __type
 export type ListVillagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, url: string, name: string, people: number, bans: Array<{ __typename?: 'VillageBans', position: VillageBanPosition, trip: string }> } | null> };
+export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, url: string, name: string, people: number, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
 
 
 export const InitializeDocument = `
