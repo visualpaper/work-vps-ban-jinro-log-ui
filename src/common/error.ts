@@ -4,6 +4,17 @@ export function isAppError(error: any, errorClass: any = AppError): boolean {
   return error instanceof errorClass
 }
 
+export function ifAppErrorWith(
+  error: any,
+  doFunc: (error: AppError) => any,
+  errorClass: any = AppError
+) {
+  if (error instanceof errorClass) {
+    return doFunc.call(null, error)
+  }
+  return null
+}
+
 export class AppError extends Error {
   public code: string
   public error?: Error

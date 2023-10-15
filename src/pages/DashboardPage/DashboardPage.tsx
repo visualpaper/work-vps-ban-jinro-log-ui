@@ -1,7 +1,11 @@
 import { Box, Divider, Grid, SxProps, Theme } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../UserContext'
-import { useContext, useEffect } from 'react'
+import { graphqlRequestClient } from '../../common/client'
+import { Fragment, useContext, useEffect } from 'react'
+import { ListVillagesQuery, useListVillagesQuery } from '../../types/generated/query'
+import { AppError, defaultUseErrorBoundary, ifAppErrorWith, isAppError } from '../../common/error'
+import { SnackbarAlert } from '../../components/Snackbar'
 
 const contentStyle: SxProps<Theme> = {
   color: '#777',
@@ -16,12 +20,30 @@ const createdByStyle: SxProps<Theme> = {
 export const DashboardPage: React.FC = () => {
   const { user } = useContext(UserContext)
   const navigate = useNavigate()
+  const { data: villagesData, isFetching: villagesIsFetching } =
+    useListVillagesQuery<ListVillagesQuery>(
+      graphqlRequestClient,
+      {},
+      {
+        enabled: true, // 表示時に実行
+        onError: (error: any) =>
+          ifAppErrorWith(error, (error: AppError) => {
+            <SnackbarAlert message={error.getDisplayMessage()}/>
+          }),
+        useErrorBoundary: defaultUseErrorBoundary,
+        suspense: false,
+      }
+    )
 
   useEffect(() => {
     if (!user) {
       navigate('/')
     }
   }, [])
+
+  if (villagesIsFetching) {
+    return <Fragment/>
+  }
 
   // direction="column": 縦方向に並べる
   // justifyContent="center": 縦方向の中間から並べる

@@ -4,6 +4,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { addResolversToSchema } from '@graphql-tools/schema'
 import { User, Village } from './types/generated/types'
+import { villages } from './data/villages'
 
 // ログイン実施済みか
 var logined = true
@@ -22,7 +23,7 @@ const schema = loadSchemaSync('./schema/schema.graphql', {
 
 const resolvers = {
   Query: {
-    sites: async (): Promise<Village[]> => {
+    villages: async (): Promise<Village[]> => {
       await sleep(1000)
 
       return villages()
@@ -31,7 +32,6 @@ const resolvers = {
   Mutation: {
     initialize: async (_: unknown, args: {}): Promise<User | null> => {
       var villageNumbers: number[] = []
-      console.log(args)
       await sleep(1000)
 
       if (logined) {
@@ -55,6 +55,3 @@ app.all('/api/graphql', createHandler({ schema: schemaWithResolvers }))
 
 app.listen({ port: 5000 })
 console.log('Listening to port 5000')
-function villages(): Village[] | PromiseLike<Village[]> {
-  throw new Error('Function not implemented.')
-}
