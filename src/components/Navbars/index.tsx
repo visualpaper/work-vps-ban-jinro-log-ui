@@ -41,9 +41,9 @@ export const Navbars: React.FC<{}> = () => {
               人狼通報ログまとめ
             </Button>
             <Box display="flex" flexGrow={1}>
-              <Button sx={buttonStyle}>Search</Button>
+              <Button sx={buttonStyle}>検索</Button>
             </Box>
-            <Button sx={{ ...buttonStyle, mr: 5 }}>About</Button>
+            <Button sx={{ ...buttonStyle, mr: 5 }}>お問い合わせ</Button>
           </Toolbar>
         </Container>
       </AppBar>
