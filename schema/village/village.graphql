@@ -1,0 +1,12 @@
+query listVillages {
+  villages {
+    id
+    url
+    name
+    people
+    bans {
+      position
+      trip
+    }
+  }
+}

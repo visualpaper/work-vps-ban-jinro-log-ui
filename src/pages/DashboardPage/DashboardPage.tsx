@@ -1,5 +1,7 @@
 import { Box, Divider, Grid, SxProps, Theme } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserContext } from '../UserContext'
+import { useContext, useEffect } from 'react'
 
 const contentStyle: SxProps<Theme> = {
   color: '#777',
@@ -12,6 +14,15 @@ const createdByStyle: SxProps<Theme> = {
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 export const DashboardPage: React.FC = () => {
+  const { user } = useContext(UserContext)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/')
+    }
+  }, [])
+
   // direction="column": 縦方向に並べる
   // justifyContent="center": 縦方向の中間から並べる
   // alignItems="stretch": 横方向いっぱい利用する

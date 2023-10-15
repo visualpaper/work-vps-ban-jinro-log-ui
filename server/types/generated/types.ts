@@ -34,11 +34,40 @@ export type Mutation = {
 
 export type Query = {
   __typename?: 'Query'
-  _dummy?: Maybe<Scalars['String']['output']>
+  villages: Array<Maybe<Village>>
 }
 
 export type User = {
   __typename?: 'User'
   id: Scalars['ID']['output']
   villageNumbers: Array<Maybe<Scalars['Int']['output']>>
+}
+
+export type Village = {
+  __typename?: 'Village'
+  bans: Array<VillageBans>
+  id: Scalars['ID']['output']
+  name: Scalars['String']['output']
+  people: Scalars['Int']['output']
+  url: Scalars['String']['output']
+}
+
+export enum VillageBanPosition {
+  Apostate = 'APOSTATE',
+  Cat = 'CAT',
+  Fanatic = 'FANATIC',
+  Fox = 'FOX',
+  Hunter = 'HUNTER',
+  Madman = 'MADMAN',
+  Mason = 'MASON',
+  Medium = 'MEDIUM',
+  Seer = 'SEER',
+  Villager = 'VILLAGER',
+  Wolf = 'WOLF',
+}
+
+export type VillageBans = {
+  __typename?: 'VillageBans'
+  position: VillageBanPosition
+  trip: Scalars['String']['output']
 }

@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
-import { useMutation, UseMutationOptions } from '@tanstack/react-query';
+import { useMutation, useQuery, UseMutationOptions, UseQueryOptions } from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -31,7 +31,7 @@ export type Mutation = {
 
 export type Query = {
   __typename?: 'Query';
-  _dummy?: Maybe<Scalars['String']['output']>;
+  villages: Array<Maybe<Village>>;
 };
 
 export type User = {
@@ -40,10 +40,44 @@ export type User = {
   villageNumbers: Array<Maybe<Scalars['Int']['output']>>;
 };
 
+export type Village = {
+  __typename?: 'Village';
+  bans: Array<VillageBans>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  people: Scalars['Int']['output'];
+  url: Scalars['String']['output'];
+};
+
+export enum VillageBanPosition {
+  Apostate = 'APOSTATE',
+  Cat = 'CAT',
+  Fanatic = 'FANATIC',
+  Fox = 'FOX',
+  Hunter = 'HUNTER',
+  Madman = 'MADMAN',
+  Mason = 'MASON',
+  Medium = 'MEDIUM',
+  Seer = 'SEER',
+  Villager = 'VILLAGER',
+  Wolf = 'WOLF'
+}
+
+export type VillageBans = {
+  __typename?: 'VillageBans';
+  position: VillageBanPosition;
+  trip: Scalars['String']['output'];
+};
+
 export type InitializeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type InitializeMutation = { __typename?: 'Mutation', initialize: { __typename?: 'User', id: string, villageNumbers: Array<number | null> } };
+
+export type ListVillagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, url: string, name: string, people: number, bans: Array<{ __typename?: 'VillageBans', position: VillageBanPosition, trip: string }> } | null> };
 
 
 export const InitializeDocument = `
@@ -67,3 +101,34 @@ export const useInitializeMutation = <
       (variables?: InitializeMutationVariables) => fetcher<InitializeMutation, InitializeMutationVariables>(client, InitializeDocument, variables, headers)(),
       options
     );
+export const ListVillagesDocument = `
+    query listVillages {
+  villages {
+    id
+    url
+    name
+    people
+    bans {
+      position
+      trip
+    }
+  }
+}
+    `;
+export const useListVillagesQuery = <
+      TData = ListVillagesQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: ListVillagesQueryVariables,
+      options?: UseQueryOptions<ListVillagesQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) =>
+    useQuery<ListVillagesQuery, TError, TData>(
+      variables === undefined ? ['listVillages'] : ['listVillages', variables],
+      fetcher<ListVillagesQuery, ListVillagesQueryVariables>(client, ListVillagesDocument, variables, headers),
+      options
+    );
+
+useListVillagesQuery.getKey = (variables?: ListVillagesQueryVariables) => variables === undefined ? ['listVillages'] : ['listVillages', variables];
+;
