@@ -23,8 +23,8 @@ describe('Navbars', () => {
 
     // 各メニューが表示され、押下可能であること
     expect(screen.getByText('人狼通報ログまとめ')).toBeEnabled()
-    expect(screen.getByText('Search')).toBeEnabled()
-    expect(screen.getByText('About')).toBeEnabled()
+    expect(screen.getByText('検索')).toBeEnabled()
+    expect(screen.getByText('お問い合わせ')).toBeEnabled()
   })
 
   test('タイトルを押下した場合', async () => {
