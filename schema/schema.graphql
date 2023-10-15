@@ -42,6 +42,8 @@ type VillageBans {
 
 type Village {
   id: ID!
+  number: String!
+  endDate: String!
   url: String!
   name: String!
   people: Int!

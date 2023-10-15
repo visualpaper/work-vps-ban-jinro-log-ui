@@ -1,6 +1,8 @@
 query listVillages {
   villages {
     id
+    number
+    endDate
     url
     name
     people

@@ -7,7 +7,7 @@ export function isAppError(error: any, errorClass: any = AppError): boolean {
 export function ifAppErrorWith(
   error: any,
   doFunc: (error: AppError) => any,
-  errorClass: any = AppError
+  errorClass: any = AppError,
 ) {
   if (error instanceof errorClass) {
     return doFunc.call(null, error)

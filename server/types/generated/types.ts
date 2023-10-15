@@ -47,8 +47,10 @@ export type Village = {
   __typename?: 'Village'
   bans: Array<VillageBans>
   cast: VillageCast
+  endDate: Scalars['String']['output']
   id: Scalars['ID']['output']
   name: Scalars['String']['output']
+  number: Scalars['String']['output']
   people: Scalars['Int']['output']
   url: Scalars['String']['output']
 }

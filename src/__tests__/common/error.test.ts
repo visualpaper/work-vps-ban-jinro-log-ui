@@ -23,7 +23,7 @@ describe('ifAppErrorWith', () => {
     new Fixture(new AppError('test'), undefined, 'expect'),
     new Fixture(new AppError('test'), AppError, 'expect'),
     new Fixture(new Error('test'), undefined, null),
-    new Fixture(new Error('test'), Error, 'expect')
+    new Fixture(new Error('test'), Error, 'expect'),
   ])('theory', (fx) => {
     expect(ifAppErrorWith(fx.error, doFunc, fx.errorClass)).toBe(fx.expected)
   })

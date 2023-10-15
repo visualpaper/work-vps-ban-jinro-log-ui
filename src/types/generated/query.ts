@@ -44,8 +44,10 @@ export type Village = {
   __typename?: 'Village';
   bans: Array<VillageBans>;
   cast: VillageCast;
+  endDate: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
+  number: Scalars['String']['output'];
   people: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
@@ -85,7 +87,7 @@ export type InitializeMutation = { __typename?: 'Mutation', initialize: { __type
 export type ListVillagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, url: string, name: string, people: number, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
+export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
 
 
 export const InitializeDocument = `
@@ -113,6 +115,8 @@ export const ListVillagesDocument = `
     query listVillages {
   villages {
     id
+    number
+    endDate
     url
     name
     people

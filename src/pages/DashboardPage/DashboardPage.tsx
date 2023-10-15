@@ -2,10 +2,22 @@ import { Box, Divider, Grid, SxProps, Theme } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../UserContext'
 import { graphqlRequestClient } from '../../common/client'
-import { Fragment, useContext, useEffect } from 'react'
-import { ListVillagesQuery, useListVillagesQuery } from '../../types/generated/query'
-import { AppError, defaultUseErrorBoundary, ifAppErrorWith, isAppError } from '../../common/error'
+import { Fragment, useContext, useEffect, useMemo } from 'react'
+import {
+  ListVillagesQuery,
+  Village,
+  VillageBans,
+  useListVillagesQuery,
+} from '../../types/generated/query'
+import {
+  AppError,
+  defaultUseErrorBoundary,
+  ifAppErrorWith,
+} from '../../common/error'
 import { SnackbarAlert } from '../../components/Snackbar'
+import { ColumnDef } from '@tanstack/react-table'
+import { FixedTable } from '../../components/FixedTable'
+import { formatEndDate } from '../../common/date'
 
 const contentStyle: SxProps<Theme> = {
   color: '#777',
@@ -27,13 +39,67 @@ export const DashboardPage: React.FC = () => {
       {
         enabled: true, // 表示時に実行
         onError: (error: any) =>
-          ifAppErrorWith(error, (error: AppError) => {
-            <SnackbarAlert message={error.getDisplayMessage()}/>
-          }),
+          ifAppErrorWith(error, (error: AppError) => (
+            <SnackbarAlert message={error.getDisplayMessage()} />
+          )),
         useErrorBoundary: defaultUseErrorBoundary,
         suspense: false,
-      }
+      },
     )
+
+  const columns = useMemo<ColumnDef<Village | any>[]>(
+    () => [
+      {
+        header: 'No.',
+        size: 100,
+        accessorKey: 'number',
+      },
+      {
+        header: '終了時刻',
+        size: 200,
+        cell: ({ row }) => {
+          return formatEndDate(row.original.endDate)
+        },
+      },
+      {
+        header: '村名',
+        cell: ({ row }) => {
+          return (
+            <Link to={row.original.url} target="_blank">
+              {row.original.name}
+            </Link>
+          )
+        },
+      },
+      {
+        header: '役職',
+        size: 100,
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.original.bans.map((ban: VillageBans) => (
+                <div>{ban.position}</div>
+              ))}
+            </>
+          )
+        },
+      },
+      {
+        header: '通報対象者',
+        size: 100,
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.original.bans.map((ban: VillageBans) => (
+                <div>{ban.trip}</div>
+              ))}
+            </>
+          )
+        },
+      },
+    ],
+    [villagesData],
+  )
 
   useEffect(() => {
     if (!user) {
@@ -42,7 +108,7 @@ export const DashboardPage: React.FC = () => {
   }, [])
 
   if (villagesIsFetching) {
-    return <Fragment/>
+    return <Fragment />
   }
 
   // direction="column": 縦方向に並べる
@@ -79,6 +145,16 @@ export const DashboardPage: React.FC = () => {
         <Grid item xs={12}>
           <Box component="h2" sx={contentStyle}>
             最近追加されたログ
+          </Box>
+          <Box component="p" sx={createdByStyle}>
+            {villagesData && (
+              <>
+                <FixedTable<Village | any>
+                  data={villagesData.villages}
+                  columns={columns}
+                />
+              </>
+            )}
           </Box>
         </Grid>
       </Grid>
