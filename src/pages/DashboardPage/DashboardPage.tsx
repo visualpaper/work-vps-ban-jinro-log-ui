@@ -7,7 +7,7 @@ const contentStyle: SxProps<Theme> = {
 
 const createdByStyle: SxProps<Theme> = {
   color: '#777',
-  textAlign: "right"
+  textAlign: 'right',
 }
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -30,12 +30,17 @@ export const DashboardPage: React.FC = () => {
             本サイトについて
           </Box>
           <Box component="p" sx={contentStyle}>
-            人狼ゲーム るる鯖 <Link to="https://ruru-jinro.net/" target="_blank">https://ruru-jinro.net/</Link> の過去ログから、荒らし行為によって廃村になったログをまとめています。
+            人狼ゲーム るる鯖{' '}
+            <Link to="https://ruru-jinro.net/" target="_blank">
+              https://ruru-jinro.net/
+            </Link>{' '}
+            の過去ログから、荒らし行為によって廃村になったログをまとめています。
             <br />
             荒らしプレイヤーを確認する際にご利用いただければ幸いです。
           </Box>
           <Box component="p" sx={contentStyle}>
-            何かございましたら<a href="">お問い合わせ</a>ページよりご連絡ください。
+            何かございましたら<a href="">お問い合わせ</a>
+            ページよりご連絡ください。
           </Box>
         </Grid>
         <Grid item xs={12}>
@@ -45,13 +50,10 @@ export const DashboardPage: React.FC = () => {
         </Grid>
       </Grid>
       <Divider />
-      <Grid
-        container
-        justifyContent="flex-end"
-        alignItems="flex-end"
-        >
+      <Grid container justifyContent="flex-end" alignItems="flex-end">
         <Box component="p" sx={createdByStyle}>
-          本ページで利用されているリソースの全ての権利は人狼ゲーム るる鯖にあります
+          本ページで利用されているリソースの全ての権利は人狼ゲーム
+          るる鯖にあります
           <br />
           Created by visualpaper
         </Box>
