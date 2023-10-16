@@ -87,7 +87,7 @@ export type InitializeMutation = { __typename?: 'Mutation', initialize: { __type
 export type ListVillagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
+export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
 
 
 export const InitializeDocument = `
@@ -120,6 +120,7 @@ export const ListVillagesDocument = `
     url
     name
     people
+    cast
     bans {
       position
       trip

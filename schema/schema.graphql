@@ -3,15 +3,15 @@ type User {
   villageNumbers: [Int]!
 }
 
-# 狼
+# 人狼
 # 狂信者
 # 狂人
-# 狐
+# 妖狐
 # 背徳者
 # 占い師
 # 霊能者
 # 狩人
-# 猫
+# 猫又
 # 共有者
 # 村人
 enum VillagePosition {

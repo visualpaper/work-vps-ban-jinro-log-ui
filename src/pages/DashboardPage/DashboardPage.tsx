@@ -17,7 +17,7 @@ import {
 import { SnackbarAlert } from '../../components/Snackbar'
 import { ColumnDef } from '@tanstack/react-table'
 import { FixedTable } from '../../components/FixedTable'
-import { formatEndDate } from '../../common/date'
+import { formatEndDate, toCastString, toPositionString } from '../../model/village'
 
 const contentStyle: SxProps<Theme> = {
   color: '#777',
@@ -25,6 +25,7 @@ const contentStyle: SxProps<Theme> = {
 
 const createdByStyle: SxProps<Theme> = {
   color: '#777',
+  fontSize: 10,
   textAlign: 'right',
 }
 
@@ -72,14 +73,12 @@ export const DashboardPage: React.FC = () => {
         },
       },
       {
-        header: '役職',
+        header: '配役',
         size: 100,
         cell: ({ row }) => {
           return (
             <>
-              {row.original.bans.map((ban: VillageBans) => (
-                <div>{ban.position}</div>
-              ))}
+              {row.original.people + toCastString(row.original.cast)}
             </>
           )
         },
@@ -90,8 +89,21 @@ export const DashboardPage: React.FC = () => {
         cell: ({ row }) => {
           return (
             <>
-              {row.original.bans.map((ban: VillageBans) => (
-                <div>{ban.trip}</div>
+              {row.original.bans.map((ban: VillageBans, index: number) => (
+                <div key={index}>{ban.trip}</div>
+              ))}
+            </>
+          )
+        },
+      },
+      {
+        header: '役職',
+        size: 100,
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.original.bans.map((ban: VillageBans, index: number) => (
+                <div key={index}>{toPositionString(ban.position)}</div>
               ))}
             </>
           )
@@ -129,10 +141,10 @@ export const DashboardPage: React.FC = () => {
             本サイトについて
           </Box>
           <Box component="p" sx={contentStyle}>
-            人狼ゲーム るる鯖{' '}
+            人狼ゲーム るる鯖
             <Link to="https://ruru-jinro.net/" target="_blank">
               https://ruru-jinro.net/
-            </Link>{' '}
+            </Link>
             の過去ログから、荒らし行為によって廃村になったログをまとめています。
             <br />
             荒らしプレイヤーを確認する際にご利用いただければ幸いです。
@@ -146,7 +158,7 @@ export const DashboardPage: React.FC = () => {
           <Box component="h2" sx={contentStyle}>
             最近追加されたログ
           </Box>
-          <Box component="p" sx={createdByStyle}>
+          <Box component="div" sx={contentStyle}>
             {villagesData && (
               <>
                 <FixedTable<Village | any>
@@ -158,7 +170,6 @@ export const DashboardPage: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-      <Divider />
       <Grid container justifyContent="flex-end" alignItems="flex-end">
         <Box component="p" sx={createdByStyle}>
           本ページで利用されているリソースの全ての権利は人狼ゲーム
