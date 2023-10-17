@@ -54,7 +54,7 @@ export const formatEndDate = (dateString: string): string => {
   return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(
     2,
     '0',
-  )}/${String(date.getDate()).padStart(2, '0')} ${String(
+  )}/${String(date.getUTCDate()).padStart(2, '0')} ${String(
     date.getUTCHours(),
   ).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}:${String(
     date.getUTCSeconds(),
