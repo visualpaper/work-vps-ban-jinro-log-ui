@@ -3,7 +3,13 @@ import { SnackbarAlert } from '../../../components/Snackbar'
 
 describe('SnackbarAlert', () => {
   test('正常系', async () => {
-    const { container } = render(<SnackbarAlert message={'Alert Message'} />)
+    const { container } = render(
+      <SnackbarAlert
+        isOpen={true}
+        message={'Alert Message'}
+        handleClose={() => {}}
+      />,
+    )
 
     await waitFor(() => {
       expect(container.getElementsByClassName('MuiAlert-message').length).toBe(

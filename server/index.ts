@@ -5,6 +5,7 @@ import { loadSchemaSync } from '@graphql-tools/load'
 import { addResolversToSchema } from '@graphql-tools/schema'
 import { User, Village } from './types/generated/types'
 import { villages } from './data/villages'
+import { GraphQLError } from 'graphql'
 
 // ログイン実施済みか
 var logined = true
@@ -30,6 +31,11 @@ const resolvers = {
       await sleep(1000)
 
       return villages()
+      // throw new GraphQLError('villages error', {
+      //   extensions: {
+      //     code: 'BASE-0000',
+      //   },
+      // })
     },
   },
   Mutation: {

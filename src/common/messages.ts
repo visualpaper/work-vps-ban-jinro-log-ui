@@ -1,6 +1,6 @@
 export const ERROR_CODE = {
-  SERVER_UNEXPECTED: '',
   CONFLICT: '',
+  SERVER_UNEXPECTED: 'BASE-0000',
   CLIENT_ERROR: 'CLIENT_ERROR', // これは内部用
 }
 

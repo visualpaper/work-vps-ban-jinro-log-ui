@@ -1,11 +1,26 @@
-import { Alert, Snackbar } from '@mui/material'
+import { Snackbar } from '@mui/material'
+import MuiAlert from '@mui/material/Alert'
+import React from 'react'
 
-export const SnackbarAlert: React.FC<{ message: string }> = ({ message }) => {
+export const SnackbarAlert: React.FC<{
+  isOpen: boolean
+  message: string
+  handleClose: () => void
+}> = ({ isOpen, message, handleClose }) => {
   return (
-    <Snackbar open={true} autoHideDuration={6000}>
-      <Alert severity="warning" sx={{ width: '100%' }}>
+    <Snackbar
+      open={isOpen}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      autoHideDuration={5000}
+      onClose={() => handleClose()}
+    >
+      <MuiAlert
+        onClose={() => handleClose()}
+        severity="warning"
+        sx={{ width: '100%' }}
+      >
         {message}
-      </Alert>
+      </MuiAlert>
     </Snackbar>
   )
 }
