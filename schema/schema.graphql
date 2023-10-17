@@ -52,7 +52,7 @@ type Village {
 }
 
 type Query {
-  villages: [Village]!
+  villages(skip: Int! = 0, take: Int! = 5): [Village]!
 }
 
 type Mutation {

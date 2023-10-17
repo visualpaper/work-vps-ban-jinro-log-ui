@@ -1,52 +1,50 @@
-import { AppError } from "../common/error"
-import { VillageCast, VillagePosition } from "../types/generated/query"
+import { VillageCast, VillagePosition } from '../types/generated/query'
 
 export const toCastString = (cast: VillageCast): string => {
-
-  switch(cast) {
+  switch (cast) {
     case VillageCast.A:
-      return "A"
+      return 'A'
     case VillageCast.B:
-      return "B"
+      return 'B'
     case VillageCast.C:
-      return "C"
+      return 'C'
     case VillageCast.D:
-      return "D"
+      return 'D'
 
     // 発生しえないためエラーとしている。
     default:
-      throw new Error("illegal state")
+      throw new Error('illegal state')
   }
 }
 
 export const toPositionString = (position: VillagePosition): string => {
-  switch(position) {
+  switch (position) {
     case VillagePosition.Wolf:
-      return "人狼"
+      return '人狼'
     case VillagePosition.Fanatic:
-      return "狂信者"
+      return '狂信者'
     case VillagePosition.Madman:
-      return "狂人"
+      return '狂人'
     case VillagePosition.Fox:
-      return "妖狐"
+      return '妖狐'
     case VillagePosition.Apostate:
-      return "背徳者"
+      return '背徳者'
     case VillagePosition.Seer:
-      return "占い師"
+      return '占い師'
     case VillagePosition.Medium:
-      return "霊能者"
+      return '霊能者'
     case VillagePosition.Hunter:
-      return "狩人"
+      return '狩人'
     case VillagePosition.Cat:
-      return "猫又"
+      return '猫又'
     case VillagePosition.Mason:
-      return "共有者"
+      return '共有者'
     case VillagePosition.Villager:
-      return "村人"
+      return '村人'
 
     // 発生しえないためエラーとしている。
     default:
-      throw new Error("illegal state")
+      throw new Error('illegal state')
   }
 }
 

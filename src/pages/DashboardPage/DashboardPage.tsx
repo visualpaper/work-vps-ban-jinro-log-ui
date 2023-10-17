@@ -1,4 +1,4 @@
-import { Box, Divider, Grid, SxProps, Theme } from '@mui/material'
+import { Box, Grid, SxProps, Theme } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../UserContext'
 import { graphqlRequestClient } from '../../common/client'
@@ -17,7 +17,11 @@ import {
 import { SnackbarAlert } from '../../components/Snackbar'
 import { ColumnDef } from '@tanstack/react-table'
 import { FixedTable } from '../../components/FixedTable'
-import { formatEndDate, toCastString, toPositionString } from '../../model/village'
+import {
+  formatEndDate,
+  toCastString,
+  toPositionString,
+} from '../../model/village'
 
 const contentStyle: SxProps<Theme> = {
   color: '#777',
@@ -36,7 +40,10 @@ export const DashboardPage: React.FC = () => {
   const { data: villagesData, isFetching: villagesIsFetching } =
     useListVillagesQuery<ListVillagesQuery>(
       graphqlRequestClient,
-      {},
+      {
+        skip: 0,
+        take: 5,
+      },
       {
         enabled: true, // 表示時に実行
         onError: (error: any) =>
@@ -76,11 +83,7 @@ export const DashboardPage: React.FC = () => {
         header: '配役',
         size: 100,
         cell: ({ row }) => {
-          return (
-            <>
-              {row.original.people + toCastString(row.original.cast)}
-            </>
-          )
+          return <>{row.original.people + toCastString(row.original.cast)}</>
         },
       },
       {

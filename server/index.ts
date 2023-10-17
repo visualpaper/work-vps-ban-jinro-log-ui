@@ -23,7 +23,10 @@ const schema = loadSchemaSync('./schema/schema.graphql', {
 
 const resolvers = {
   Query: {
-    villages: async (): Promise<Village[]> => {
+    villages: async (
+      _: unknown,
+      args: { skip: number; take: number },
+    ): Promise<Village[]> => {
       await sleep(1000)
 
       return villages()

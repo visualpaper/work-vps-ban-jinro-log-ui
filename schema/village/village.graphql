@@ -1,5 +1,5 @@
-query listVillages {
-  villages {
+query listVillages($skip: Int!, $take: Int!) {
+  villages(skip: $skip, take: $take) {
     id
     number
     endDate

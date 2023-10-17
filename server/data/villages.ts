@@ -1,7 +1,6 @@
 import { Village, VillageCast, VillagePosition } from '../types/generated/types'
 
 export const villages = (): Village[] => {
-
   return [
     {
       id: '1',
@@ -48,7 +47,7 @@ export const villages = (): Village[] => {
       bans: [
         {
           position: VillagePosition.Fox,
-          trip: "cccc",
+          trip: 'cccc',
         },
       ],
     },
@@ -63,7 +62,7 @@ export const villages = (): Village[] => {
       bans: [
         {
           position: VillagePosition.Madman,
-          trip: "ddd",
+          trip: 'ddd',
         },
       ],
     },
@@ -78,7 +77,7 @@ export const villages = (): Village[] => {
       bans: [
         {
           position: VillagePosition.Hunter,
-          trip: "ee",
+          trip: 'ee',
         },
       ],
     },
