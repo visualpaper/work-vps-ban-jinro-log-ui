@@ -57,11 +57,11 @@ describe('toPositionString', () => {
 describe('formatEndDate', () => {
   test('formatEndDate - 正常系', () => {
     expect(formatEndDate('2020-10-14T16:28:05Z')).toBe(
-      '2020/10/14 16:28:05(木)',
+      '2020/10/14 16:28:05(水)',
     )
   })
 
   test('formatEndDate - 異常系', () => {
-    expect(() => formatEndDate('aaa')).toThrow(/Invalid time value/)
+    expect(() => formatEndDate('aaa')).toThrow(/Invalid Date/)
   })
 })

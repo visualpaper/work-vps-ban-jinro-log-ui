@@ -51,6 +51,10 @@ export const toPositionString = (position: VillagePosition): string => {
 export const formatEndDate = (dateString: string): string => {
   const date = new Date(dateString)
 
+  // 日付が不正の場合
+  if (isNaN(date.getTime())) {
+    throw Error('Invalid Date')
+  }
   return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(
     2,
     '0',
@@ -58,7 +62,8 @@ export const formatEndDate = (dateString: string): string => {
     date.getUTCHours(),
   ).padStart(2, '0')}:${String(date.getUTCMinutes()).padStart(2, '0')}:${String(
     date.getUTCSeconds(),
-  ).padStart(2, '0')}(${Intl.DateTimeFormat('ja-JP', {
-    weekday: 'narrow',
-  }).format(date)})`
+  ).padStart(2, '0')}(${date.toLocaleDateString('ja', {
+    timeZone: 'UTC',
+    weekday: 'short',
+  })})`
 }
