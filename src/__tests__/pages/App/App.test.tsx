@@ -8,7 +8,10 @@ import { screen, render, waitFor } from '../../test-utils'
 
 const response = jest.fn()
 const api = graphql.link(process.env.REACT_APP_GRAPHQL_ENDPOINT!)
-const server = setupServer(api.mutation('initialize', response))
+const server = setupServer(
+  api.mutation('initialize', response),
+  api.query('listVillages', response),
+)
 
 beforeAll(() => server.listen())
 

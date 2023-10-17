@@ -3,7 +3,9 @@ import { createHandler } from 'graphql-http/lib/use/express'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { addResolversToSchema } from '@graphql-tools/schema'
-import { User } from './types/generated/types'
+import { User, Village } from './types/generated/types'
+import { villages } from './data/villages'
+import { GraphQLError } from 'graphql'
 
 // ログイン実施済みか
 var logined = true
@@ -21,11 +23,24 @@ const schema = loadSchemaSync('./schema/schema.graphql', {
 })
 
 const resolvers = {
-  Query: {},
+  Query: {
+    villages: async (
+      _: unknown,
+      args: { skip: number; take: number },
+    ): Promise<Village[]> => {
+      await sleep(1000)
+
+      return villages()
+      // throw new GraphQLError('villages error', {
+      //   extensions: {
+      //     code: 'BASE-0000',
+      //   },
+      // })
+    },
+  },
   Mutation: {
     initialize: async (_: unknown, args: {}): Promise<User | null> => {
       var villageNumbers: number[] = []
-      console.log(args)
       await sleep(1000)
 
       if (logined) {

@@ -1,5 +1,27 @@
-import { Box, Divider, Grid, SxProps, Theme } from '@mui/material'
-import { Link } from 'react-router-dom'
+import { Box, Grid, SxProps, Theme } from '@mui/material'
+import { Link, useNavigate } from 'react-router-dom'
+import { UserContext } from '../UserContext'
+import { graphqlRequestClient } from '../../common/client'
+import { Fragment, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  ListVillagesQuery,
+  Village,
+  VillageBans,
+  useListVillagesQuery,
+} from '../../types/generated/query'
+import {
+  AppError,
+  defaultUseErrorBoundary,
+  ifAppErrorWith,
+} from '../../common/error'
+import { SnackbarAlert } from '../../components/Snackbar'
+import { ColumnDef } from '@tanstack/react-table'
+import { FixedTable } from '../../components/FixedTable'
+import {
+  formatEndDate,
+  toCastString,
+  toPositionString,
+} from '../../model/village'
 
 const contentStyle: SxProps<Theme> = {
   color: '#777',
@@ -7,11 +29,125 @@ const contentStyle: SxProps<Theme> = {
 
 const createdByStyle: SxProps<Theme> = {
   color: '#777',
+  fontSize: 10,
   textAlign: 'right',
 }
 
 // eslint-disable-next-line unused-imports/no-unused-vars
 export const DashboardPage: React.FC = () => {
+  const { user } = useContext(UserContext)
+  const [modalShow, setModalShow] = useState<{
+    show: boolean
+    message: string
+  }>({
+    show: false,
+    message: '',
+  })
+  const navigate = useNavigate()
+  const { data: villagesData, isFetching: villagesIsFetching } =
+    useListVillagesQuery<ListVillagesQuery>(
+      graphqlRequestClient,
+      // variable が変化しない都合上
+      // F5 での更新時に onError に来ない？ように見える。
+      // 仕様かもしれないので、挙動だけ覚えておく。
+      {
+        skip: 0,
+        take: 5,
+      },
+      {
+        enabled: true, // 表示時に実行
+        onError: (error: any) => {
+          ifAppErrorWith(error, (error: AppError) => {
+            setModalShow({
+              ...modalShow,
+              show: true,
+              message: error.getDisplayMessage(),
+            })
+          })
+        },
+        useErrorBoundary: defaultUseErrorBoundary,
+        suspense: false,
+      },
+    )
+
+  const columns = useMemo<ColumnDef<Village | any>[]>(
+    () => [
+      {
+        header: 'No.',
+        size: 100,
+        accessorKey: 'number',
+      },
+      {
+        header: '終了時刻',
+        size: 200,
+        cell: ({ row }) => {
+          return formatEndDate(row.original.endDate)
+        },
+      },
+      {
+        header: '村名',
+        cell: ({ row }) => {
+          return (
+            <Link to={row.original.url} target="_blank">
+              {row.original.name}
+            </Link>
+          )
+        },
+      },
+      {
+        header: '配役',
+        size: 100,
+        cell: ({ row }) => {
+          return <>{row.original.people + toCastString(row.original.cast)}</>
+        },
+      },
+      {
+        header: '通報対象者',
+        size: 100,
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.original.bans.map((ban: VillageBans, index: number) => (
+                <div key={index}>{ban.trip}</div>
+              ))}
+            </>
+          )
+        },
+      },
+      {
+        header: '役職',
+        size: 100,
+        cell: ({ row }) => {
+          return (
+            <>
+              {row.original.bans.map((ban: VillageBans, index: number) => (
+                <div key={index}>{toPositionString(ban.position)}</div>
+              ))}
+            </>
+          )
+        },
+      },
+    ],
+    [villagesData],
+  )
+
+  const modalClose = () => {
+    setModalShow({
+      ...modalShow,
+      show: false,
+    })
+  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/')
+    }
+  }, [])
+
+  if (villagesIsFetching) {
+    return <Fragment />
+  }
+
   // direction="column": 縦方向に並べる
   // justifyContent="center": 縦方向の中間から並べる
   // alignItems="stretch": 横方向いっぱい利用する
@@ -26,14 +162,19 @@ export const DashboardPage: React.FC = () => {
         spacing={4}
       >
         <Grid item xs={12}>
+          <SnackbarAlert
+            isOpen={modalShow.show}
+            message={modalShow.message}
+            handleClose={modalClose}
+          />
           <Box component="h2" sx={contentStyle}>
             本サイトについて
           </Box>
           <Box component="p" sx={contentStyle}>
-            人狼ゲーム るる鯖{' '}
+            人狼ゲーム るる鯖
             <Link to="https://ruru-jinro.net/" target="_blank">
               https://ruru-jinro.net/
-            </Link>{' '}
+            </Link>
             の過去ログから、荒らし行為によって廃村になったログをまとめています。
             <br />
             荒らしプレイヤーを確認する際にご利用いただければ幸いです。
@@ -47,9 +188,18 @@ export const DashboardPage: React.FC = () => {
           <Box component="h2" sx={contentStyle}>
             最近追加されたログ
           </Box>
+          <Box component="div" sx={contentStyle}>
+            {villagesData && (
+              <>
+                <FixedTable<Village | any>
+                  data={villagesData.villages}
+                  columns={columns}
+                />
+              </>
+            )}
+          </Box>
         </Grid>
       </Grid>
-      <Divider />
       <Grid container justifyContent="flex-end" alignItems="flex-end">
         <Box component="p" sx={createdByStyle}>
           本ページで利用されているリソースの全ての権利は人狼ゲーム

@@ -1,4 +1,33 @@
-import { AppError, isAppError } from '../../common/error'
+import { AppError, ifAppErrorWith, isAppError } from '../../common/error'
+
+describe('ifAppErrorWith', () => {
+  const doFunc = jest.fn()
+
+  class Fixture {
+    public error: any
+    public errorClass?: any
+    public expected: any
+
+    constructor(error: any, errorClass: any, expected: any) {
+      this.error = error
+      this.errorClass = errorClass
+      this.expected = expected
+    }
+  }
+
+  beforeEach(() => {
+    doFunc.mockReturnValueOnce('expect')
+  })
+
+  test.each([
+    new Fixture(new AppError('test'), undefined, 'expect'),
+    new Fixture(new AppError('test'), AppError, 'expect'),
+    new Fixture(new Error('test'), undefined, null),
+    new Fixture(new Error('test'), Error, 'expect'),
+  ])('theory', (fx) => {
+    expect(ifAppErrorWith(fx.error, doFunc, fx.errorClass)).toBe(fx.expected)
+  })
+})
 
 describe('isAppError', () => {
   class Fixture {

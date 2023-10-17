@@ -3,8 +3,56 @@ type User {
   villageNumbers: [Int]!
 }
 
+# 人狼
+# 狂信者
+# 狂人
+# 妖狐
+# 背徳者
+# 占い師
+# 霊能者
+# 狩人
+# 猫又
+# 共有者
+# 村人
+enum VillagePosition {
+  WOLF
+  FANATIC
+  MADMAN
+  FOX
+  APOSTATE
+  SEER
+  MEDIUM
+  HUNTER
+  CAT
+  MASON
+  VILLAGER
+}
+
+enum VillageCast {
+  A
+  B
+  C
+  D
+}
+
+type VillageBans {
+  position: VillagePosition!
+  trip: String!
+}
+
+type Village {
+  id: ID!
+  number: String!
+  endDate: String!
+  url: String!
+  name: String!
+  people: Int!
+  cast: VillageCast!
+  bans: [VillageBans!]!
+}
+
 type Query {
-  _dummy: String
+  villages(skip: Int! = 0, take: Int! = 5): [Village]!
 }
 
 type Mutation {

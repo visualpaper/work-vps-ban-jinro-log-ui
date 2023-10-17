@@ -1,0 +1,15 @@
+query listVillages($skip: Int!, $take: Int!) {
+  villages(skip: $skip, take: $take) {
+    id
+    number
+    endDate
+    url
+    name
+    people
+    cast
+    bans {
+      position
+      trip
+    }
+  }
+}
