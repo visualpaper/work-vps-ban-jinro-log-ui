@@ -2,19 +2,14 @@ import { Box, Grid, SxProps, Theme } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../UserContext'
 import { graphqlRequestClient } from '../../common/client'
-import { Fragment, useContext, useEffect, useMemo, useState } from 'react'
+import { Fragment, useContext, useEffect, useMemo } from 'react'
 import {
   ListVillagesQuery,
   Village,
   VillageBans,
   useListVillagesQuery,
 } from '../../types/generated/query'
-import {
-  AppError,
-  defaultUseErrorBoundary,
-  ifAppErrorWith,
-} from '../../common/error'
-import { SnackbarAlert } from '../../components/Snackbar'
+import { defaultOnError, defaultUseErrorBoundary } from '../../common/error'
 import { ColumnDef } from '@tanstack/react-table'
 import { FixedTable } from '../../components/FixedTable'
 import {
@@ -36,13 +31,6 @@ const createdByStyle: SxProps<Theme> = {
 // eslint-disable-next-line unused-imports/no-unused-vars
 export const DashboardPage: React.FC = () => {
   const { user } = useContext(UserContext)
-  const [modalShow, setModalShow] = useState<{
-    show: boolean
-    message: string
-  }>({
-    show: false,
-    message: '',
-  })
   const navigate = useNavigate()
   const { data: villagesData, isFetching: villagesIsFetching } =
     useListVillagesQuery<ListVillagesQuery>(
@@ -50,21 +38,10 @@ export const DashboardPage: React.FC = () => {
       // variable が変化しない都合上
       // F5 での更新時に onError に来ない？ように見える。
       // 仕様かもしれないので、挙動だけ覚えておく。
-      {
-        skip: 0,
-        take: 5,
-      },
+      {},
       {
         enabled: true, // 表示時に実行
-        onError: (error: any) => {
-          ifAppErrorWith(error, (error: AppError) => {
-            setModalShow({
-              ...modalShow,
-              show: true,
-              message: error.getDisplayMessage(),
-            })
-          })
-        },
+        onError: defaultOnError,
         useErrorBoundary: defaultUseErrorBoundary,
         suspense: false,
       },
@@ -131,13 +108,6 @@ export const DashboardPage: React.FC = () => {
     [villagesData],
   )
 
-  const modalClose = () => {
-    setModalShow({
-      ...modalShow,
-      show: false,
-    })
-  }
-
   useEffect(() => {
     if (!user) {
       navigate('/')
@@ -162,11 +132,6 @@ export const DashboardPage: React.FC = () => {
         spacing={4}
       >
         <Grid item xs={12}>
-          <SnackbarAlert
-            isOpen={modalShow.show}
-            message={modalShow.message}
-            handleClose={modalClose}
-          />
           <Box component="h2" sx={contentStyle}>
             本サイトについて
           </Box>

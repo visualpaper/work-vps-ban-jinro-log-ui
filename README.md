@@ -283,6 +283,17 @@ Github 上で main branch を protect 状態にする。
   ※ icon 関連を利用する場合に必要になる。  
   ※ CDN 参照も可能だが、本番環境でやらないほうが良いっぽいので npm インストールのみとしている。
 
+<br>
+
+### toast
+
+- npm i react-toastify  
+  ※ ToastContainer と `import 'react-toastify/dist/ReactToastify.css'` の追加が必要な点に注意。  
+  (参照) https://fkhadra.github.io/react-toastify/introduction
+
+- npm i react-icons  
+  (参照) https://react-icons.github.io/react-icons
+
 <br><br>
 
 ## build
