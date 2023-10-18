@@ -30,12 +30,12 @@ const resolvers = {
     ): Promise<Village[]> => {
       await sleep(1000)
 
-      // return villages()
-      throw new GraphQLError('villages error', {
-        extensions: {
-          code: 'BASE-0000',
-        },
-      })
+      return villages()
+      // throw new GraphQLError('villages error', {
+      //   extensions: {
+      //     code: 'BASE-0000',
+      //   },
+      // })
     },
   },
   Mutation: {
