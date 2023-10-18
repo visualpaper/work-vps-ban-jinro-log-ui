@@ -1,4 +1,5 @@
 import { ERROR_CODE, ERROR_MESSAGES } from './messages'
+import { toast } from 'react-toastify'
 
 export function isAppError(error: any, errorClass: any = AppError): boolean {
   return error instanceof errorClass
@@ -34,6 +35,16 @@ export class AppError extends Error {
       return ERROR_MESSAGES[this.code]
     }
     return ERROR_MESSAGES[ERROR_CODE.SERVER_UNEXPECTED]
+  }
+}
+
+export const defaultOnError = (error: any) => {
+  // https://fkhadra.github.io/react-toastify/introduction/
+  if (isAppError(error)) {
+    toast.error(error.getDisplayMessage(), {
+      autoClose: 5000,
+      closeOnClick: true,
+    })
   }
 }
 

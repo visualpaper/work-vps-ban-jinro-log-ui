@@ -3,6 +3,7 @@ import React from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MemoryRouter } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 import { App } from '../pages/App/App'
 import { ErrorPage } from '../pages/ErrorPage/ErrorPage'
 import Router from '../router'
@@ -36,6 +37,10 @@ function render(url: string) {
           <ErrorBoundary FallbackComponent={ErrorPage}>
             <App>
               <Router />
+              <ToastContainer
+                position={toast.POSITION.TOP_RIGHT}
+                theme="colored"
+              />
             </App>
           </ErrorBoundary>
         </QueryClientProvider>

@@ -2,10 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
+import { toast, ToastContainer } from 'react-toastify'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorPage } from './pages/ErrorPage/ErrorPage'
 import { App } from './pages/App/App'
 import Router from './router'
+import 'react-toastify/dist/ReactToastify.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
@@ -32,6 +34,10 @@ root.render(
         <ErrorBoundary FallbackComponent={ErrorPage}>
           <App>
             <Router />
+            <ToastContainer
+              position={toast.POSITION.TOP_RIGHT}
+              theme="colored"
+            />
           </App>
         </ErrorBoundary>
       </QueryClientProvider>

@@ -90,10 +90,7 @@ export type InitializeMutationVariables = Exact<{ [key: string]: never; }>;
 
 export type InitializeMutation = { __typename?: 'Mutation', initialize: { __typename?: 'User', id: string, villageNumbers: Array<number | null> } };
 
-export type ListVillagesQueryVariables = Exact<{
-  skip: Scalars['Int']['input'];
-  take: Scalars['Int']['input'];
-}>;
+export type ListVillagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
@@ -121,8 +118,8 @@ export const useInitializeMutation = <
       options
     );
 export const ListVillagesDocument = `
-    query listVillages($skip: Int!, $take: Int!) {
-  villages(skip: $skip, take: $take) {
+    query listVillages {
+  villages {
     id
     number
     endDate
@@ -142,15 +139,15 @@ export const useListVillagesQuery = <
       TError = unknown
     >(
       client: GraphQLClient,
-      variables: ListVillagesQueryVariables,
+      variables?: ListVillagesQueryVariables,
       options?: UseQueryOptions<ListVillagesQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
     useQuery<ListVillagesQuery, TError, TData>(
-      ['listVillages', variables],
+      variables === undefined ? ['listVillages'] : ['listVillages', variables],
       fetcher<ListVillagesQuery, ListVillagesQueryVariables>(client, ListVillagesDocument, variables, headers),
       options
     );
 
-useListVillagesQuery.getKey = (variables: ListVillagesQueryVariables) => ['listVillages', variables];
+useListVillagesQuery.getKey = (variables?: ListVillagesQueryVariables) => variables === undefined ? ['listVillages'] : ['listVillages', variables];
 ;
