@@ -52,7 +52,7 @@ export type Village = {
   endDate: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  number: Scalars['String']['output'];
+  number: Scalars['Int']['output'];
   people: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
@@ -105,7 +105,7 @@ export type ListVillagesQueryVariables = Exact<{
 }>;
 
 
-export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
+export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: number, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
 
 
 export const InitializeDocument = `

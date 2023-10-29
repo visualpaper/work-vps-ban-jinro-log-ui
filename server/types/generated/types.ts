@@ -54,7 +54,7 @@ export type Village = {
   endDate: Scalars['String']['output']
   id: Scalars['ID']['output']
   name: Scalars['String']['output']
-  number: Scalars['String']['output']
+  number: Scalars['Int']['output']
   people: Scalars['Int']['output']
   url: Scalars['String']['output']
 }

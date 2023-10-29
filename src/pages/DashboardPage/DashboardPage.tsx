@@ -41,8 +41,8 @@ export const DashboardPage: React.FC = () => {
       {
         input: {
           position: [],
-          cast: []
-        }
+          cast: [],
+        },
       },
       {
         enabled: true, // 表示時に実行

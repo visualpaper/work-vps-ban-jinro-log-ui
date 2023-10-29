@@ -4,7 +4,7 @@ export const villages = (): Village[] => {
   return [
     {
       id: '1',
-      number: '1000',
+      number: 1000,
       endDate: '2023-01-01T10:00:00Z',
       url: 'https://aaaa.com',
       name: '村名A',
@@ -19,7 +19,7 @@ export const villages = (): Village[] => {
     },
     {
       id: '2',
-      number: '2000',
+      number: 2000,
       endDate: '2023-02-01T11:00:00Z',
       url: 'https://bbb.com',
       name: '村名B',
@@ -38,7 +38,7 @@ export const villages = (): Village[] => {
     },
     {
       id: '3',
-      number: '3000',
+      number: 3000,
       endDate: '2023-03-01T10:00:00Z',
       url: 'https://cccc.com',
       name: '村名C',
@@ -53,7 +53,7 @@ export const villages = (): Village[] => {
     },
     {
       id: '4',
-      number: '4100',
+      number: 4100,
       endDate: '2023-04-01T10:00:00Z',
       url: 'https://dddd.com',
       name: '村名D',
@@ -68,7 +68,7 @@ export const villages = (): Village[] => {
     },
     {
       id: '5',
-      number: '5555',
+      number: 5555,
       endDate: '2023-05-01T10:00:00Z',
       url: 'https://eeee.com',
       name: '村名EEE',
