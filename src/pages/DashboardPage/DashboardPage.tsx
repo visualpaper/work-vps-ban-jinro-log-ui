@@ -56,12 +56,12 @@ export const DashboardPage: React.FC = () => {
     () => [
       {
         header: 'No.',
-        size: 100,
+        size: 30,
         accessorKey: 'number',
       },
       {
         header: '終了時刻',
-        size: 200,
+        size: 100,
         cell: ({ row }) => {
           return formatEndDate(row.original.endDate)
         },
@@ -78,14 +78,14 @@ export const DashboardPage: React.FC = () => {
       },
       {
         header: '配役',
-        size: 100,
+        size: 20,
         cell: ({ row }) => {
           return <>{row.original.people + toCastString(row.original.cast)}</>
         },
       },
       {
         header: '通報対象者',
-        size: 100,
+        size: 200,
         cell: ({ row }) => {
           return (
             <>
@@ -98,7 +98,7 @@ export const DashboardPage: React.FC = () => {
       },
       {
         header: '役職',
-        size: 100,
+        size: 40,
         cell: ({ row }) => {
           return (
             <>
