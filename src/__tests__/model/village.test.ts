@@ -21,6 +21,7 @@ describe('toCastString', () => {
     new Fixture(VillageCast.B, 'B'),
     new Fixture(VillageCast.C, 'C'),
     new Fixture(VillageCast.D, 'D'),
+    new Fixture(VillageCast.Z, 'Z'),
   ])('theory', (fx) => {
     expect(toCastString(fx.cast)).toBe(fx.expected)
   })

@@ -10,6 +10,8 @@ export const toCastString = (cast: VillageCast): string => {
       return 'C'
     case VillageCast.D:
       return 'D'
+    case VillageCast.Z:
+      return 'Z'
 
     // 発生しえないためエラーとしている。
     default:

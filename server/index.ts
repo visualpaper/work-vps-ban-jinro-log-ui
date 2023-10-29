@@ -3,7 +3,7 @@ import { createHandler } from 'graphql-http/lib/use/express'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { addResolversToSchema } from '@graphql-tools/schema'
-import { User, Village } from './types/generated/types'
+import { User, Village, VillagesInput } from './types/generated/types'
 import { villages } from './data/villages'
 import { GraphQLError } from 'graphql'
 
@@ -26,8 +26,9 @@ const resolvers = {
   Query: {
     villages: async (
       _: unknown,
-      args: { skip: number; take: number },
+      args: { input: VillagesInput },
     ): Promise<Village[]> => {
+      console.log(args.input)
       await sleep(1000)
 
       return villages()

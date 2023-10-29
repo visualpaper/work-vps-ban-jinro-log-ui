@@ -1,5 +1,5 @@
-query listVillages {
-  villages {
+query listVillages($input: VillagesInput!) {
+  villages(input: $input) {
     id
     number
     endDate
