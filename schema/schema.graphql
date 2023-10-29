@@ -9,10 +9,10 @@ type User {
 # 妖狐
 # 背徳者
 # 占い師
-# 霊能者
+# 霊能
 # 狩人
 # 猫又
-# 共有者
+# 共有
 # 村人
 enum VillagePosition {
   WOLF
@@ -33,6 +33,7 @@ enum VillageCast {
   B
   C
   D
+  Z
 }
 
 type VillageBans {
@@ -51,8 +52,18 @@ type Village {
   bans: [VillageBans!]!
 }
 
+input VillagesInput {
+  trip: String
+  people_min: Int
+  people_max: Int
+  cast: [VillageCast]!
+  position: [VillagePosition]!
+  skip: Int! = 0
+  take: Int! = 5
+}
+
 type Query {
-  villages(skip: Int! = 0, take: Int! = 5): [Village]!
+  villages(input: VillagesInput!): [Village]!
 }
 
 type Mutation {

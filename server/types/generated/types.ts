@@ -38,8 +38,7 @@ export type Query = {
 }
 
 export type QueryVillagesArgs = {
-  skip?: Scalars['Int']['input']
-  take?: Scalars['Int']['input']
+  input: VillagesInput
 }
 
 export type User = {
@@ -71,6 +70,7 @@ export enum VillageCast {
   B = 'B',
   C = 'C',
   D = 'D',
+  Z = 'Z',
 }
 
 export enum VillagePosition {
@@ -85,4 +85,14 @@ export enum VillagePosition {
   Seer = 'SEER',
   Villager = 'VILLAGER',
   Wolf = 'WOLF',
+}
+
+export type VillagesInput = {
+  cast: Array<InputMaybe<VillageCast>>
+  people_max?: InputMaybe<Scalars['Int']['input']>
+  people_min?: InputMaybe<Scalars['Int']['input']>
+  position: Array<InputMaybe<VillagePosition>>
+  skip?: Scalars['Int']['input']
+  take?: Scalars['Int']['input']
+  trip?: InputMaybe<Scalars['String']['input']>
 }

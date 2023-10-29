@@ -36,8 +36,7 @@ export type Query = {
 
 
 export type QueryVillagesArgs = {
-  skip?: Scalars['Int']['input'];
-  take?: Scalars['Int']['input'];
+  input: VillagesInput;
 };
 
 export type User = {
@@ -68,7 +67,8 @@ export enum VillageCast {
   A = 'A',
   B = 'B',
   C = 'C',
-  D = 'D'
+  D = 'D',
+  Z = 'Z'
 }
 
 export enum VillagePosition {
@@ -85,12 +85,24 @@ export enum VillagePosition {
   Wolf = 'WOLF'
 }
 
+export type VillagesInput = {
+  cast: Array<InputMaybe<VillageCast>>;
+  people_max?: InputMaybe<Scalars['Int']['input']>;
+  people_min?: InputMaybe<Scalars['Int']['input']>;
+  position: Array<InputMaybe<VillagePosition>>;
+  skip?: Scalars['Int']['input'];
+  take?: Scalars['Int']['input'];
+  trip?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type InitializeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type InitializeMutation = { __typename?: 'Mutation', initialize: { __typename?: 'User', id: string, villageNumbers: Array<number | null> } };
 
-export type ListVillagesQueryVariables = Exact<{ [key: string]: never; }>;
+export type ListVillagesQueryVariables = Exact<{
+  input: VillagesInput;
+}>;
 
 
 export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
@@ -118,8 +130,8 @@ export const useInitializeMutation = <
       options
     );
 export const ListVillagesDocument = `
-    query listVillages {
-  villages {
+    query listVillages($input: VillagesInput!) {
+  villages(input: $input) {
     id
     number
     endDate
@@ -139,15 +151,15 @@ export const useListVillagesQuery = <
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: ListVillagesQueryVariables,
+      variables: ListVillagesQueryVariables,
       options?: UseQueryOptions<ListVillagesQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) =>
     useQuery<ListVillagesQuery, TError, TData>(
-      variables === undefined ? ['listVillages'] : ['listVillages', variables],
+      ['listVillages', variables],
       fetcher<ListVillagesQuery, ListVillagesQueryVariables>(client, ListVillagesDocument, variables, headers),
       options
     );
 
-useListVillagesQuery.getKey = (variables?: ListVillagesQueryVariables) => variables === undefined ? ['listVillages'] : ['listVillages', variables];
+useListVillagesQuery.getKey = (variables: ListVillagesQueryVariables) => ['listVillages', variables];
 ;

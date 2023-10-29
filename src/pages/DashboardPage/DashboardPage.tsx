@@ -38,7 +38,12 @@ export const DashboardPage: React.FC = () => {
       // variable が変化しない都合上
       // F5 での更新時に onError に来ない？ように見える。
       // 仕様かもしれないので、挙動だけ覚えておく。
-      {},
+      {
+        input: {
+          position: [],
+          cast: []
+        }
+      },
       {
         enabled: true, // 表示時に実行
         onError: defaultOnError,
