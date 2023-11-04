@@ -34,13 +34,13 @@ export const toPositionString = (position: VillagePosition): string => {
     case VillagePosition.Seer:
       return '占い師'
     case VillagePosition.Medium:
-      return '霊能者'
+      return '霊能'
     case VillagePosition.Hunter:
       return '狩人'
     case VillagePosition.Cat:
       return '猫又'
     case VillagePosition.Mason:
-      return '共有者'
+      return '共有'
     case VillagePosition.Villager:
       return '村人'
 

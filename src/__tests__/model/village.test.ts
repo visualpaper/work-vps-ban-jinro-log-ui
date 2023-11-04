@@ -45,10 +45,10 @@ describe('toPositionString', () => {
     new Fixture(VillagePosition.Fox, '妖狐'),
     new Fixture(VillagePosition.Apostate, '背徳者'),
     new Fixture(VillagePosition.Seer, '占い師'),
-    new Fixture(VillagePosition.Medium, '霊能者'),
+    new Fixture(VillagePosition.Medium, '霊能'),
     new Fixture(VillagePosition.Hunter, '狩人'),
     new Fixture(VillagePosition.Cat, '猫又'),
-    new Fixture(VillagePosition.Mason, '共有者'),
+    new Fixture(VillagePosition.Mason, '共有'),
     new Fixture(VillagePosition.Villager, '村人'),
   ])('theory', (fx) => {
     expect(toPositionString(fx.position)).toBe(fx.expected)

@@ -10,8 +10,6 @@ const formStyle: SxProps<Theme> = {
   borderRadius: '0.25rem',
   boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
   mt: 4,
-  ml: 10,
-  mr: 10,
   p: 3,
 }
 
@@ -161,13 +159,17 @@ export const SearchForm: React.FC<{
     }
     const positions: VillagePosition[] = toVillagePosition(selectPositions)
 
-    handleSubmit(
-      values.people_min,
-      values.people_max,
-      cast,
-      positions,
-      values.trip,
-    )
+    if (values.trip) {
+      handleSubmit(
+        values.people_min,
+        values.people_max,
+        cast,
+        positions,
+        values.trip,
+      )
+    } else {
+      handleSubmit(values.people_min, values.people_max, cast, positions)
+    }
   }
 
   return (
@@ -188,7 +190,8 @@ export const SearchForm: React.FC<{
               setSelectCast={setSelectCast}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={1} />
+          <Grid item xs={5}>
             <RightConditions
               selectPositions={selectPositions}
               setSelectPositions={setSelectPositions}
