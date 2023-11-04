@@ -54,6 +54,14 @@ export const SearchPage: React.FC = () => {
     null,
   )
   const [submitted, setSubmitted] = useState<boolean>(false)
+  const [pagination, setPagination] = useState<{
+    currentPage: number
+    totalPageCount: number
+  }>({
+    currentPage: 1,
+    totalPageCount: 0,
+  })
+
   const { isFetching } = useListVillagesQuery<ListVillagesQuery>(
     graphqlRequestClient,
     {
@@ -70,9 +78,13 @@ export const SearchPage: React.FC = () => {
     },
     {
       enabled: submitted, // Submit 時に input を変更し、有効化
-      onSuccess: (data) => {
+      onSuccess: (data: ListVillagesQuery) => {
         // 自動で読み込みが走らないように無効化
         setSubmitted(false)
+        setPagination({
+          ...pagination,
+          totalPageCount: Math.floor(data!.villages.totalItems / 100) + 1,
+        })
         setVillagesData(data!)
       },
       onError: (e) => {
@@ -146,6 +158,20 @@ export const SearchPage: React.FC = () => {
     [villagesData],
   )
 
+  const handlePageChange = (page: number) => {
+    setPagination({
+      ...pagination,
+      currentPage: page,
+    })
+
+    setVillagesQuery({
+      ...villagesQuery,
+      skip: (page - 1) * 100,
+      take: 100,
+    })
+    setSubmitted(true)
+  }
+
   const handleSearch = (
     people_min: number,
     people_max: number,
@@ -153,6 +179,11 @@ export const SearchPage: React.FC = () => {
     position: VillagePosition[],
     trip?: string,
   ) => {
+    setPagination({
+      currentPage: 1,
+      totalPageCount: 0,
+    })
+
     setVillagesQuery({
       trip: trip,
       people_min: people_min,
@@ -181,13 +212,7 @@ export const SearchPage: React.FC = () => {
   // spacing: 各 Grid Item ごとの間隔
   return (
     <>
-      <Grid
-        container
-        direction="column"
-        justifyContent="center"
-        alignItems="stretch"
-        spacing={4}
-      >
+      <Grid container justifyContent="center" alignItems="stretch" spacing={4}>
         <Grid item xs={12}>
           <Box component="h2" sx={contentStyle}>
             検索
@@ -208,10 +233,15 @@ export const SearchPage: React.FC = () => {
           <Box component="div" sx={contentStyle}>
             <PageLoader isPageLoading={isFetching}>
               {villagesData && (
-                <FixedTable<Village | any>
-                  data={villagesData.villages}
-                  columns={columns}
-                />
+                <>
+                  <FixedTable<Village | any>
+                    data={villagesData.villages.items}
+                    columns={columns}
+                    currentPage={pagination.currentPage}
+                    setCurrentPage={handlePageChange}
+                    totalPageCount={pagination.totalPageCount}
+                  />
+                </>
               )}
             </PageLoader>
           </Box>

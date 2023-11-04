@@ -1,5 +1,31 @@
 import { Village, VillageCast, VillagePosition } from '../types/generated/types'
 
+export const create_village = (id: number): Village => {
+  return {
+    id: String(id),
+    number: id,
+    endDate: '2023-01-01T10:00:00Z',
+    url: 'https://aaaa.com',
+    name: '村名A',
+    people: 10,
+    cast: VillageCast.A,
+    bans: [
+      {
+        position: VillagePosition.Wolf,
+        trip: 'aaaa',
+      },
+    ],
+  }
+}
+
+export const villages_before = (): Village[] => {
+  return [...Array(100).keys()].map((v) => create_village(v))
+}
+
+export const villages_after = (): Village[] => {
+  return [...Array(11).keys()].map((v) => create_village(v))
+}
+
 export const villages = (): Village[] => {
   return [
     {

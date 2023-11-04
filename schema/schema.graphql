@@ -52,6 +52,11 @@ type Village {
   bans: [VillageBans!]!
 }
 
+type VillageResult {
+  totalItems: Int!
+  items: [Village]!
+}
+
 input VillagesInput {
   trip: String
   people_min: Int
@@ -63,7 +68,7 @@ input VillagesInput {
 }
 
 type Query {
-  villages(input: VillagesInput!): [Village]!
+  villages(input: VillagesInput!): VillageResult!
 }
 
 type Mutation {
