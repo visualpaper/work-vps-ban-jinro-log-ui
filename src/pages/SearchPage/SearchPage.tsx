@@ -50,7 +50,7 @@ export const SearchPage: React.FC = () => {
                 position: [],
               }}
               fetching={false}
-              handleSummit={() => {}}
+              handleSubmit={() => {}}
             />
           </Box>
         </Grid>

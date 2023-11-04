@@ -1,25 +1,9 @@
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { VillageCast, VillagePosition } from '../../types/generated/query'
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormHelperText,
-  FormLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  SxProps,
-  TextField,
-  Theme,
-} from '@mui/material'
+import { Box, Button, Container, Grid, SxProps, Theme } from '@mui/material'
 import { useState } from 'react'
+import { LeftConditions } from './leftConditions'
+import { RightConditions } from './rightConditions'
 
 const formStyle: SxProps<Theme> = {
   backgroundColor: '#fff',
@@ -39,17 +23,31 @@ export type SearchFormValue = {
   position: VillagePosition[]
 }
 
+export type SelectPosition = {
+  fox: boolean
+  apostate: boolean
+  wolf: boolean
+  fanatic: boolean
+  madman: boolean
+  seer: boolean
+  medium: boolean
+  hunter: boolean
+  cat: boolean
+  mason: boolean
+  villager: boolean
+}
+
 export const SearchForm: React.FC<{
   defaultValue: SearchFormValue
   fetching: boolean
-  handleSummit: (
+  handleSubmit: (
     people_min: number,
     people_max: number,
     cast: VillageCast[],
     position: VillagePosition[],
     trip?: string,
   ) => void
-}> = ({ defaultValue, fetching, handleSummit }) => {
+}> = ({ defaultValue, fetching, handleSubmit }) => {
   const {
     control,
     reset,
@@ -61,7 +59,7 @@ export const SearchForm: React.FC<{
     defaultValues: defaultValue,
   })
   const [selectCast, setSelectCast] = useState<string>('')
-  const [positions, setPositions] = useState({
+  const [selectPositions, setSelectPositions] = useState<SelectPosition>({
     fox: true,
     apostate: true,
     wolf: true,
@@ -75,22 +73,11 @@ export const SearchForm: React.FC<{
     villager: true,
   })
 
-  const handlePositionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPositions({
-      ...positions,
-      [event.target.name]: event.target.checked,
-    })
-  }
-
-  const handleSelectCastChange = (event: SelectChangeEvent) => {
-    setSelectCast(event.target.value)
-  }
-
   const handleClear = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>, // eslint-disable-line unused-imports/no-unused-vars
   ) => {
     setSelectCast('')
-    setPositions({
+    setSelectPositions({
       fox: true,
       apostate: true,
       wolf: true,
@@ -106,18 +93,79 @@ export const SearchForm: React.FC<{
     reset()
   }
 
+  const toVillageCast = (selectCast: string): VillageCast => {
+    switch (selectCast) {
+      case 'A':
+        return VillageCast.A
+      case 'B':
+        return VillageCast.B
+      case 'C':
+        return VillageCast.C
+      case 'D':
+        return VillageCast.D
+      case 'Z':
+        return VillageCast.Z
+      default:
+        throw new Error('unexpected')
+    }
+  }
+
+  const toVillagePosition = (
+    selectPositions: SelectPosition,
+  ): VillagePosition[] => {
+    const position = []
+
+    if (selectPositions.fox) {
+      position.push(VillagePosition.Fox)
+    }
+    if (selectPositions.apostate) {
+      position.push(VillagePosition.Apostate)
+    }
+
+    if (selectPositions.wolf) {
+      position.push(VillagePosition.Wolf)
+    }
+    if (selectPositions.fanatic) {
+      position.push(VillagePosition.Fanatic)
+    }
+    if (selectPositions.madman) {
+      position.push(VillagePosition.Madman)
+    }
+
+    if (selectPositions.seer) {
+      position.push(VillagePosition.Seer)
+    }
+    if (selectPositions.medium) {
+      position.push(VillagePosition.Medium)
+    }
+    if (selectPositions.hunter) {
+      position.push(VillagePosition.Hunter)
+    }
+    if (selectPositions.cat) {
+      position.push(VillagePosition.Cat)
+    }
+    if (selectPositions.mason) {
+      position.push(VillagePosition.Mason)
+    }
+    if (selectPositions.villager) {
+      position.push(VillagePosition.Villager)
+    }
+    return position
+  }
+
   const onSubmit = (values: SearchFormValue) => {
     const cast: VillageCast[] = []
 
-    console.log(values)
-    console.log(selectCast)
-    console.log(positions)
+    if (selectCast) {
+      cast.push(toVillageCast(selectCast))
+    }
+    const positions: VillagePosition[] = toVillagePosition(selectPositions)
 
-    handleSummit(
+    handleSubmit(
       values.people_min,
       values.people_max,
       cast,
-      values.position,
+      positions,
       values.trip,
     )
   }
@@ -133,265 +181,18 @@ export const SearchForm: React.FC<{
           alignItems="stretch"
         >
           <Grid item xs={6}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Controller
-                  name="trip"
-                  control={control}
-                  defaultValue=""
-                  // 以下でルール設定可能
-                  // rules={{
-                  //   required: { value: true, message: '必須入力' }
-                  // }}
-                  render={({ field }) => (
-                    <TextField
-                      {...field}
-                      label="トリップ"
-                      variant="standard"
-                      fullWidth
-                      error={errors.trip ? true : false}
-                      helperText={errors.trip?.message as string}
-                    />
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Grid container spacing={3}>
-                  <Grid item xs={2.5}>
-                    <Controller
-                      name="people_min"
-                      control={control}
-                      defaultValue={8}
-                      render={({ field }) => (
-                        <FormControl
-                          fullWidth
-                          error={errors.people_min ? true : false}
-                        >
-                          <InputLabel id="select-people-min-label">
-                            人数
-                          </InputLabel>
-                          <Select
-                            labelId="select-people-min-label"
-                            id="select-people-min"
-                            label="Select"
-                            variant="standard"
-                            {...field}
-                          >
-                            <MenuItem value={8}>8</MenuItem>
-                            <MenuItem value={9}>9</MenuItem>
-                            <MenuItem value={10}>10</MenuItem>
-                          </Select>
-                          <FormHelperText>
-                            {errors.people_min?.message || ''}
-                          </FormHelperText>
-                        </FormControl>
-                      )}
-                    />
-                  </Grid>
-                  <Grid item xs={1.5}>
-                    <FormControl>
-                      <FormLabel sx={{ mt: 2.5 }}>～</FormLabel>
-                    </FormControl>
-                  </Grid>
-
-                  <Grid item xs={2.5}>
-                    <Controller
-                      name="people_max"
-                      control={control}
-                      defaultValue={30}
-                      render={({ field }) => (
-                        <FormControl
-                          fullWidth
-                          error={errors.people_max ? true : false}
-                        >
-                          <InputLabel id="select-people-max-label"></InputLabel>
-                          <Select
-                            labelId="select-people-max-label"
-                            id="select-people-max"
-                            label="Select"
-                            variant="standard"
-                            {...field}
-                          >
-                            <MenuItem value={30}>30</MenuItem>
-                            <MenuItem value={29}>29</MenuItem>
-                            <MenuItem value={28}>28</MenuItem>
-                          </Select>
-                          <FormHelperText>
-                            {errors.people_max?.message || ''}
-                          </FormHelperText>
-                        </FormControl>
-                      )}
-                    />
-                  </Grid>
-
-                  <Grid item xs={3.5}>
-                    <FormControl fullWidth variant="standard">
-                      <InputLabel id="demo-simple-select-standard-label">
-                        配役
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        value={selectCast}
-                        onChange={handleSelectCastChange}
-                        label="配役"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={'A'}>A</MenuItem>
-                        <MenuItem value={'B'}>B</MenuItem>
-                        <MenuItem value={'C'}>C</MenuItem>
-                        <MenuItem value={'D'}>D</MenuItem>
-                        <MenuItem value={'Z'}>Z</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
+            <LeftConditions
+              control={control}
+              errors={errors}
+              selectCast={selectCast}
+              setSelectCast={setSelectCast}
+            />
           </Grid>
           <Grid item xs={6}>
-            <Grid style={{ height: '100%' }}>
-              <Box sx={{ display: 'flex' }}>
-                <FormControl
-                  sx={{ m: 2 }}
-                  component="fieldset"
-                  variant="standard"
-                >
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.fox}
-                          onChange={handlePositionChange}
-                          name="fox"
-                        />
-                      }
-                      label="妖狐"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.apostate}
-                          onChange={handlePositionChange}
-                          name="apostate"
-                        />
-                      }
-                      label="背徳者"
-                    />
-                  </FormGroup>
-                </FormControl>
-                <FormControl
-                  required
-                  component="fieldset"
-                  sx={{ m: 2 }}
-                  variant="standard"
-                >
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.wolf}
-                          onChange={handlePositionChange}
-                          name="wolf"
-                        />
-                      }
-                      label="人狼"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.fanatic}
-                          onChange={handlePositionChange}
-                          name="fanatic"
-                        />
-                      }
-                      label="狂信者"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.madman}
-                          onChange={handlePositionChange}
-                          name="madman"
-                        />
-                      }
-                      label="狂人"
-                    />
-                  </FormGroup>
-                </FormControl>
-                <FormControl
-                  required
-                  component="fieldset"
-                  sx={{ m: 2 }}
-                  variant="standard"
-                >
-                  <FormGroup>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.seer}
-                          onChange={handlePositionChange}
-                          name="seer"
-                        />
-                      }
-                      label="占い師"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.medium}
-                          onChange={handlePositionChange}
-                          name="medium"
-                        />
-                      }
-                      label="霊能"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.hunter}
-                          onChange={handlePositionChange}
-                          name="hunter"
-                        />
-                      }
-                      label="狩人"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.cat}
-                          onChange={handlePositionChange}
-                          name="cat"
-                        />
-                      }
-                      label="猫又"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.mason}
-                          onChange={handlePositionChange}
-                          name="mason"
-                        />
-                      }
-                      label="共有"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={positions.villager}
-                          onChange={handlePositionChange}
-                          name="villager"
-                        />
-                      }
-                      label="村人"
-                    />
-                  </FormGroup>
-                </FormControl>
-              </Box>
-            </Grid>
+            <RightConditions
+              selectPositions={selectPositions}
+              setSelectPositions={setSelectPositions}
+            />
           </Grid>
         </Grid>
       </Container>
