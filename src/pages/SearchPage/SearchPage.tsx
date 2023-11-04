@@ -42,13 +42,16 @@ export const SearchPage: React.FC = () => {
           <Box component="h2" sx={contentStyle}>
             検索
           </Box>
-          <Box component="p">
-            <SearchForm defaultValue={{
-              people_min: 8,
-              people_max: 30,
-              cast: [],
-              position: []
-            }} fetching={false} handleSummit={() => {}} />
+          <Box>
+            <SearchForm
+              defaultValue={{
+                people_min: 8,
+                people_max: 30,
+                position: [],
+              }}
+              fetching={false}
+              handleSummit={() => {}}
+            />
           </Box>
         </Grid>
       </Grid>
