@@ -54,7 +54,7 @@ describe('FixedTable', () => {
       expect(screen.queryByText('Value')).toBeInTheDocument()
     })
 
-    // データが一つ存在すること
+    // データが二つ存在すること
     const trElements = container.querySelectorAll('tbody tr')
     expect(trElements.length).toBe(1)
 
@@ -98,5 +98,49 @@ describe('FixedTable', () => {
     const tdElements1 = trElements.item(1).querySelectorAll('td')
     expect(tdElements1[0].textContent).toBe('1')
     expect(tdElements1[1].textContent).toBe('1value')
+  })
+
+  test('ページネーション表示がある場合', async () => {
+    const mockedPage = jest.fn()
+    const data: FixedTableData[] = [
+      {
+        id: 0,
+        value: '0value',
+      },
+      {
+        id: 1,
+        value: '1value',
+      },
+    ]
+
+    const { container } = render(
+      <FixedTable<FixedTableData | any>
+        data={data}
+        columns={columns}
+        currentPage={1}
+        totalPageCount={2}
+        setCurrentPage={mockedPage}
+      />,
+    )
+
+    // テーブルが表示されるまで待機する
+    await waitFor(() => {
+      expect(screen.queryByText('Id')).toBeInTheDocument()
+      expect(screen.queryByText('Value')).toBeInTheDocument()
+    })
+
+    // データが二つ存在すること
+    const trElements = container.querySelectorAll('tbody tr')
+    expect(trElements.length).toBe(2)
+
+    // ページネーション表示がされていること
+    const paginationElement = screen.getByTestId('testPagination')
+    expect(paginationElement).toBeInTheDocument()
+    expect(
+      paginationElement.querySelector('[aria-label="page 1"]'),
+    ).toBeInTheDocument()
+    expect(
+      paginationElement.querySelector('[aria-label="Go to page 2"]'),
+    ).toBeInTheDocument()
   })
 })

@@ -43,42 +43,45 @@ test('初期表示', async () => {
     return res(
       ctx.status(200),
       ctx.data({
-        villages: [
-          {
-            id: '1',
-            number: '1000',
-            endDate: '2023-01-01T10:00:00Z',
-            url: 'https://aaaa.com',
-            name: '村名A',
-            people: 10,
-            cast: VillageCast.A,
-            bans: [
-              {
-                position: VillagePosition.Wolf,
-                trip: 'aaaa',
-              },
-            ],
-          },
-          {
-            id: '2',
-            number: '2000',
-            endDate: '2023-02-01T11:00:00Z',
-            url: 'https://bbb.com',
-            name: '村名B',
-            people: 8,
-            cast: VillageCast.D,
-            bans: [
-              {
-                position: VillagePosition.Villager,
-                trip: 'bbb',
-              },
-              {
-                position: VillagePosition.Cat,
-                trip: 'ccc',
-              },
-            ],
-          },
-        ],
+        villages: {
+          totalItems: 111,
+          items: [
+            {
+              id: '1',
+              number: '1000',
+              endDate: '2023-01-01T10:00:00Z',
+              url: 'https://aaaa.com',
+              name: '村名A',
+              people: 10,
+              cast: VillageCast.A,
+              bans: [
+                {
+                  position: VillagePosition.Wolf,
+                  trip: 'aaaa',
+                },
+              ],
+            },
+            {
+              id: '2',
+              number: '2000',
+              endDate: '2023-02-01T11:00:00Z',
+              url: 'https://bbb.com',
+              name: '村名B',
+              people: 8,
+              cast: VillageCast.D,
+              bans: [
+                {
+                  position: VillagePosition.Villager,
+                  trip: 'bbb',
+                },
+                {
+                  position: VillagePosition.Cat,
+                  trip: 'ccc',
+                },
+              ],
+            },
+          ],
+        },
       }),
     )
   })

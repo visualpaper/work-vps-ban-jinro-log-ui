@@ -43,13 +43,18 @@ type VillageBans {
 
 type Village {
   id: ID!
-  number: String!
+  number: Int!
   endDate: String!
   url: String!
   name: String!
   people: Int!
   cast: VillageCast!
   bans: [VillageBans!]!
+}
+
+type VillageResult {
+  totalItems: Int!
+  items: [Village]!
 }
 
 input VillagesInput {
@@ -63,7 +68,7 @@ input VillagesInput {
 }
 
 type Query {
-  villages(input: VillagesInput!): [Village]!
+  villages(input: VillagesInput!): VillageResult!
 }
 
 type Mutation {

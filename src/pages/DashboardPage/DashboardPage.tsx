@@ -41,8 +41,8 @@ export const DashboardPage: React.FC = () => {
       {
         input: {
           position: [],
-          cast: []
-        }
+          cast: [],
+        },
       },
       {
         enabled: true, // 表示時に実行
@@ -56,12 +56,12 @@ export const DashboardPage: React.FC = () => {
     () => [
       {
         header: 'No.',
-        size: 100,
+        size: 30,
         accessorKey: 'number',
       },
       {
         header: '終了時刻',
-        size: 200,
+        size: 100,
         cell: ({ row }) => {
           return formatEndDate(row.original.endDate)
         },
@@ -78,14 +78,14 @@ export const DashboardPage: React.FC = () => {
       },
       {
         header: '配役',
-        size: 100,
+        size: 20,
         cell: ({ row }) => {
           return <>{row.original.people + toCastString(row.original.cast)}</>
         },
       },
       {
         header: '通報対象者',
-        size: 100,
+        size: 200,
         cell: ({ row }) => {
           return (
             <>
@@ -98,7 +98,7 @@ export const DashboardPage: React.FC = () => {
       },
       {
         header: '役職',
-        size: 100,
+        size: 40,
         cell: ({ row }) => {
           return (
             <>
@@ -141,9 +141,8 @@ export const DashboardPage: React.FC = () => {
             本サイトについて
           </Box>
           <Box component="p" sx={contentStyle}>
-            人狼ゲーム るる鯖
             <Link to="https://ruru-jinro.net/" target="_blank">
-              https://ruru-jinro.net/
+              人狼ゲーム るる鯖
             </Link>
             の過去ログから、荒らし行為によって廃村になったログをまとめています。
             <br />
@@ -162,7 +161,7 @@ export const DashboardPage: React.FC = () => {
             {villagesData && (
               <>
                 <FixedTable<Village | any>
-                  data={villagesData.villages}
+                  data={villagesData.villages.items}
                   columns={columns}
                 />
               </>

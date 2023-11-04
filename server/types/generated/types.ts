@@ -34,7 +34,7 @@ export type Mutation = {
 
 export type Query = {
   __typename?: 'Query'
-  villages: Array<Maybe<Village>>
+  villages: VillageResult
 }
 
 export type QueryVillagesArgs = {
@@ -54,7 +54,7 @@ export type Village = {
   endDate: Scalars['String']['output']
   id: Scalars['ID']['output']
   name: Scalars['String']['output']
-  number: Scalars['String']['output']
+  number: Scalars['Int']['output']
   people: Scalars['Int']['output']
   url: Scalars['String']['output']
 }
@@ -85,6 +85,12 @@ export enum VillagePosition {
   Seer = 'SEER',
   Villager = 'VILLAGER',
   Wolf = 'WOLF',
+}
+
+export type VillageResult = {
+  __typename?: 'VillageResult'
+  items: Array<Maybe<Village>>
+  totalItems: Scalars['Int']['output']
 }
 
 export type VillagesInput = {

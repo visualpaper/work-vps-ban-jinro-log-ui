@@ -31,7 +31,7 @@ export type Mutation = {
 
 export type Query = {
   __typename?: 'Query';
-  villages: Array<Maybe<Village>>;
+  villages: VillageResult;
 };
 
 
@@ -52,7 +52,7 @@ export type Village = {
   endDate: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
-  number: Scalars['String']['output'];
+  number: Scalars['Int']['output'];
   people: Scalars['Int']['output'];
   url: Scalars['String']['output'];
 };
@@ -85,6 +85,12 @@ export enum VillagePosition {
   Wolf = 'WOLF'
 }
 
+export type VillageResult = {
+  __typename?: 'VillageResult';
+  items: Array<Maybe<Village>>;
+  totalItems: Scalars['Int']['output'];
+};
+
 export type VillagesInput = {
   cast: Array<InputMaybe<VillageCast>>;
   people_max?: InputMaybe<Scalars['Int']['input']>;
@@ -105,7 +111,7 @@ export type ListVillagesQueryVariables = Exact<{
 }>;
 
 
-export type ListVillagesQuery = { __typename?: 'Query', villages: Array<{ __typename?: 'Village', id: string, number: string, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> };
+export type ListVillagesQuery = { __typename?: 'Query', villages: { __typename?: 'VillageResult', totalItems: number, items: Array<{ __typename?: 'Village', id: string, number: number, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> } };
 
 
 export const InitializeDocument = `
@@ -132,16 +138,19 @@ export const useInitializeMutation = <
 export const ListVillagesDocument = `
     query listVillages($input: VillagesInput!) {
   villages(input: $input) {
-    id
-    number
-    endDate
-    url
-    name
-    people
-    cast
-    bans {
-      position
-      trip
+    totalItems
+    items {
+      id
+      number
+      endDate
+      url
+      name
+      people
+      cast
+      bans {
+        position
+        trip
+      }
     }
   }
 }

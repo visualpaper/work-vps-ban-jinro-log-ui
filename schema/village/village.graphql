@@ -1,15 +1,18 @@
 query listVillages($input: VillagesInput!) {
   villages(input: $input) {
-    id
-    number
-    endDate
-    url
-    name
-    people
-    cast
-    bans {
-      position
-      trip
+    totalItems
+    items {
+      id
+      number
+      endDate
+      url
+      name
+      people
+      cast
+      bans {
+        position
+        trip
+      }
     }
   }
 }

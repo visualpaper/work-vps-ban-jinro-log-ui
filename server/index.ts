@@ -3,8 +3,13 @@ import { createHandler } from 'graphql-http/lib/use/express'
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { addResolversToSchema } from '@graphql-tools/schema'
-import { User, Village, VillagesInput } from './types/generated/types'
-import { villages } from './data/villages'
+import {
+  User,
+  Village,
+  VillageResult,
+  VillagesInput,
+} from './types/generated/types'
+import { villages, villages_after, villages_before } from './data/villages'
 import { GraphQLError } from 'graphql'
 
 // ログイン実施済みか
@@ -27,11 +32,26 @@ const resolvers = {
     villages: async (
       _: unknown,
       args: { input: VillagesInput },
-    ): Promise<Village[]> => {
+    ): Promise<VillageResult> => {
       console.log(args.input)
       await sleep(1000)
 
-      return villages()
+      if (args.input.skip! == 0 && args.input.people_min) {
+        return {
+          totalItems: 111,
+          items: villages_before(),
+        }
+      } else if (args.input.skip! > 0 && args.input.people_min) {
+        return {
+          totalItems: 111,
+          items: villages_after(),
+        }
+      } else {
+        return {
+          totalItems: 5,
+          items: villages(),
+        }
+      }
       // throw new GraphQLError('villages error', {
       //   extensions: {
       //     code: 'BASE-0000',
