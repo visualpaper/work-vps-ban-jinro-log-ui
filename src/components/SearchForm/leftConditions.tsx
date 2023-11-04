@@ -41,6 +41,7 @@ export const LeftConditions: React.FC<{
               fullWidth
               error={errors.trip ? true : false}
               helperText={errors.trip?.message as string}
+              data-testid="testTrip"
             />
           )}
         />
@@ -60,11 +61,15 @@ export const LeftConditions: React.FC<{
                     id="select-people-min"
                     label="Select"
                     variant="standard"
+                    data-testid="testPeopleMin"
+                    MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
                     {...field}
                   >
-                    <MenuItem value={8}>8</MenuItem>
-                    <MenuItem value={9}>9</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
+                    {[
+                      ...Array.from({ length: 30 - 8 + 1 }, (_, i) => i + 8),
+                    ].map((v) => (
+                      <MenuItem value={v}>{v}</MenuItem>
+                    ))}
                   </Select>
                   <FormHelperText>
                     {errors.people_min?.message || ''}
@@ -92,11 +97,15 @@ export const LeftConditions: React.FC<{
                     id="select-people-max"
                     label="Select"
                     variant="standard"
+                    data-testid="testPeopleMax"
+                    MenuProps={{ PaperProps: { sx: { maxHeight: 300 } } }}
                     {...field}
                   >
-                    <MenuItem value={30}>30</MenuItem>
-                    <MenuItem value={29}>29</MenuItem>
-                    <MenuItem value={28}>28</MenuItem>
+                    {[
+                      ...Array.from({ length: 30 - 8 + 1 }, (_, i) => i + 8),
+                    ].map((v) => (
+                      <MenuItem value={v}>{v}</MenuItem>
+                    ))}
                   </Select>
                   <FormHelperText>
                     {errors.people_max?.message || ''}
@@ -116,6 +125,7 @@ export const LeftConditions: React.FC<{
                 id="demo-simple-select-standard"
                 value={selectCast}
                 onChange={handleSelectCastChange}
+                data-testid="testCast"
                 label="配役"
               >
                 <MenuItem value="">

@@ -11,7 +11,12 @@ export const PageLoader = ({
 }) => (
   <>
     {isPageLoading && (
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        data-testid="testSpinner"
+      >
         <CircularProgress />
       </Box>
     )}

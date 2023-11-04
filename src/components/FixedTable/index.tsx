@@ -109,6 +109,7 @@ export function FixedTable<T>(props: MasterTableProps<T>) {
       </TableContainer>
       {viewPagination(currentPage, totalPageCount) && (
         <Pagination
+          data-testid="testPagination"
           count={totalPageCount}
           page={currentPage}
           onChange={handlePageChange}

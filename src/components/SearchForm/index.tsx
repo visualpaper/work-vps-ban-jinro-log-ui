@@ -205,12 +205,22 @@ export const SearchForm: React.FC<{
       />
       <Grid container justifyContent="flex-end" alignItems="center">
         <Grid item xs={1}>
-          <Button type="submit" variant="contained" disabled={fetching}>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={fetching}
+            data-testid="testSubmit"
+          >
             検索
           </Button>
         </Grid>
         <Grid item xs={1}>
-          <Button variant="outlined" onClick={handleClear} disabled={fetching}>
+          <Button
+            variant="outlined"
+            onClick={handleClear}
+            disabled={fetching}
+            data-testid="testClear"
+          >
             クリア
           </Button>
         </Grid>
