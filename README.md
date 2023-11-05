@@ -355,3 +355,13 @@ jobs:
           # ※ false だったとしても、test でのエラーは Actions は失敗する。
           CI: false
 ```
+
+### Deploy Render
+
+```
+1. Server 側のデプロイを行う
+
+2. Enviromnent に以下を入れる
+
+REACT_APP_GRAPHQL_ENDPOINT: https://xxx/api/graphql
+```
