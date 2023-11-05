@@ -372,5 +372,4 @@ REACT_APP_GRAPHQL_ENDPOINT: https://xxx/api/graphql
 5. Amplify にドメイン設定を行う
 
 6. パスワード認証をはずす
-
 ```
