@@ -27,9 +27,20 @@ export type Scalars = {
   Float: { input: number; output: number }
 }
 
+export type FeedbackInput = {
+  address: Scalars['String']['input']
+  content: Scalars['String']['input']
+  name: Scalars['String']['input']
+}
+
 export type Mutation = {
   __typename?: 'Mutation'
   initialize: User
+  sendFeedback?: Maybe<Scalars['Boolean']['output']>
+}
+
+export type MutationSendFeedbackArgs = {
+  input: FeedbackInput
 }
 
 export type Query = {

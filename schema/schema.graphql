@@ -67,10 +67,17 @@ input VillagesInput {
   take: Int! = 5
 }
 
+input FeedbackInput {
+  name: String!
+  address: String!
+  content: String!
+}
+
 type Query {
   villages(input: VillagesInput!): VillageResult!
 }
 
 type Mutation {
   initialize: User!
+  sendFeedback(input: FeedbackInput!): Boolean
 }

@@ -8,6 +8,7 @@ export const COMMON_MESSAGES = {
   SUCCESS_CREATE: 'Success create',
   SUCCESS_UPDATE: 'Success update',
   SUCCESS_DELETE: 'Success delete',
+  SUCCESS_FEED_BACK: '送信しました。',
 }
 
 export const ERROR_MESSAGES = {
