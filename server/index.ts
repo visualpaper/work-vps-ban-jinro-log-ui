@@ -4,6 +4,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader'
 import { loadSchemaSync } from '@graphql-tools/load'
 import { addResolversToSchema } from '@graphql-tools/schema'
 import {
+  FeedbackInput,
   User,
   Village,
   VillageResult,
@@ -71,6 +72,15 @@ const resolvers = {
         id: 'bfd5677d-6ac6-49db-8904-bd65620785dd',
         villageNumbers: villageNumbers,
       }
+    },
+
+    sendFeedback: async (
+      _: unknown,
+      args: { input: FeedbackInput },
+    ): Promise<Boolean | null> => {
+      await sleep(1000)
+
+      return null
     },
   },
 }

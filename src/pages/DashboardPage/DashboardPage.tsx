@@ -149,7 +149,7 @@ export const DashboardPage: React.FC = () => {
             荒らしプレイヤーを確認する際にご利用いただければ幸いです。
           </Box>
           <Box component="p" sx={contentStyle}>
-            何かございましたら<a href="">お問い合わせ</a>
+            何かございましたら<Link to="/contact">お問い合わせ</Link>
             ページよりご連絡ください。
           </Box>
         </Grid>

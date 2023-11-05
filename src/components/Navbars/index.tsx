@@ -50,7 +50,14 @@ export const Navbars: React.FC<{}> = () => {
                 検索
               </Button>
             </Box>
-            <Button sx={{ ...buttonStyle, mr: 5 }}>お問い合わせ</Button>
+            <Button
+              sx={{ ...buttonStyle, mr: 5 }}
+              onClick={() => {
+                navigate('/contact')
+              }}
+            >
+              お問い合わせ
+            </Button>
           </Toolbar>
         </Container>
       </AppBar>

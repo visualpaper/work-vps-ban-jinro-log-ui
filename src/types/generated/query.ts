@@ -24,9 +24,21 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type FeedbackInput = {
+  address: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   initialize: User;
+  sendFeedback?: Maybe<Scalars['Boolean']['output']>;
+};
+
+
+export type MutationSendFeedbackArgs = {
+  input: FeedbackInput;
 };
 
 export type Query = {
@@ -101,6 +113,13 @@ export type VillagesInput = {
   trip?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type SendFeedbackMutationVariables = Exact<{
+  input: FeedbackInput;
+}>;
+
+
+export type SendFeedbackMutation = { __typename?: 'Mutation', sendFeedback?: boolean | null };
+
 export type InitializeMutationVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -114,6 +133,24 @@ export type ListVillagesQueryVariables = Exact<{
 export type ListVillagesQuery = { __typename?: 'Query', villages: { __typename?: 'VillageResult', totalItems: number, items: Array<{ __typename?: 'Village', id: string, number: number, endDate: string, url: string, name: string, people: number, cast: VillageCast, bans: Array<{ __typename?: 'VillageBans', position: VillagePosition, trip: string }> } | null> } };
 
 
+export const SendFeedbackDocument = `
+    mutation sendFeedback($input: FeedbackInput!) {
+  sendFeedback(input: $input)
+}
+    `;
+export const useSendFeedbackMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<SendFeedbackMutation, TError, SendFeedbackMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) =>
+    useMutation<SendFeedbackMutation, TError, SendFeedbackMutationVariables, TContext>(
+      ['sendFeedback'],
+      (variables?: SendFeedbackMutationVariables) => fetcher<SendFeedbackMutation, SendFeedbackMutationVariables>(client, SendFeedbackDocument, variables, headers)(),
+      options
+    );
 export const InitializeDocument = `
     mutation initialize {
   initialize {
