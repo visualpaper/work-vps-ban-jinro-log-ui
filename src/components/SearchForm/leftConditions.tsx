@@ -68,7 +68,9 @@ export const LeftConditions: React.FC<{
                     {[
                       ...Array.from({ length: 30 - 8 + 1 }, (_, i) => i + 8),
                     ].map((v) => (
-                      <MenuItem value={v}>{v}</MenuItem>
+                      <MenuItem key={v} value={v}>
+                        {v}
+                      </MenuItem>
                     ))}
                   </Select>
                   <FormHelperText>
@@ -104,7 +106,9 @@ export const LeftConditions: React.FC<{
                     {[
                       ...Array.from({ length: 30 - 8 + 1 }, (_, i) => i + 8),
                     ].map((v) => (
-                      <MenuItem value={v}>{v}</MenuItem>
+                      <MenuItem key={v} value={v}>
+                        {v}
+                      </MenuItem>
                     ))}
                   </Select>
                   <FormHelperText>
@@ -131,11 +135,21 @@ export const LeftConditions: React.FC<{
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={'A'}>A</MenuItem>
-                <MenuItem value={'B'}>B</MenuItem>
-                <MenuItem value={'C'}>C</MenuItem>
-                <MenuItem value={'D'}>D</MenuItem>
-                <MenuItem value={'Z'}>Z</MenuItem>
+                <MenuItem key={'A'} value={'A'}>
+                  A
+                </MenuItem>
+                <MenuItem key={'B'} value={'B'}>
+                  B
+                </MenuItem>
+                <MenuItem key={'C'} value={'C'}>
+                  C
+                </MenuItem>
+                <MenuItem key={'D'} value={'D'}>
+                  D
+                </MenuItem>
+                <MenuItem key={'Z'} value={'Z'}>
+                  Z
+                </MenuItem>
               </Select>
             </FormControl>
           </Grid>

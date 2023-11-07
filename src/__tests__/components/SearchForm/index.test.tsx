@@ -71,12 +71,7 @@ describe('SearchForm', () => {
     await waitFor(() => {
       expect(mockedHandleSubmit).toHaveBeenCalledTimes(1)
     })
-    expect(mockedHandleSubmit).toHaveBeenCalledWith(
-      8,
-      30,
-      [],
-      [],
-    )
+    expect(mockedHandleSubmit).toHaveBeenCalledWith(8, 30, [], [])
   })
 
   test('入力後に Submit した場合', async () => {
@@ -102,13 +97,7 @@ describe('SearchForm', () => {
     await waitFor(() => {
       expect(mockedHandleSubmit).toHaveBeenCalledTimes(1)
     })
-    expect(mockedHandleSubmit).toHaveBeenCalledWith(
-      8,
-      30,
-      [],
-      [],
-      '1',
-    )
+    expect(mockedHandleSubmit).toHaveBeenCalledWith(8, 30, [], [], '1')
   })
 
   test('入力後に Clear し Submit した場合', async () => {
@@ -137,11 +126,6 @@ describe('SearchForm', () => {
     await waitFor(() => {
       expect(mockedHandleSubmit).toHaveBeenCalledTimes(1)
     })
-    expect(mockedHandleSubmit).toHaveBeenCalledWith(
-      8,
-      30,
-      [],
-      [],
-    )
+    expect(mockedHandleSubmit).toHaveBeenCalledWith(8, 30, [], [])
   })
 })

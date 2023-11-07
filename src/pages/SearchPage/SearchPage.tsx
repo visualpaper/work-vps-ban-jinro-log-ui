@@ -169,6 +169,7 @@ export const SearchPage: React.FC = () => {
       skip: (page - 1) * 100,
       take: 100,
     })
+    setVillagesData(null)
     setSubmitted(true)
   }
 
@@ -194,6 +195,7 @@ export const SearchPage: React.FC = () => {
       skip: 0,
       take: 100,
     })
+    setVillagesData(null)
     setSubmitted(true)
 
     // ここで refetch せずとも enable と input を操作することで実現できたので refetch は使っていない。
