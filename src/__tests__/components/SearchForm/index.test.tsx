@@ -75,19 +75,7 @@ describe('SearchForm', () => {
       8,
       30,
       [],
-      [
-        'FOX',
-        'APOSTATE',
-        'WOLF',
-        'FANATIC',
-        'MADMAN',
-        'SEER',
-        'MEDIUM',
-        'HUNTER',
-        'CAT',
-        'MASON',
-        'VILLAGER',
-      ],
+      [],
     )
   })
 
@@ -118,19 +106,7 @@ describe('SearchForm', () => {
       8,
       30,
       [],
-      [
-        'FOX',
-        'APOSTATE',
-        'WOLF',
-        'FANATIC',
-        'MADMAN',
-        'SEER',
-        'MEDIUM',
-        'HUNTER',
-        'CAT',
-        'MASON',
-        'VILLAGER',
-      ],
+      [],
       '1',
     )
   })
@@ -165,19 +141,7 @@ describe('SearchForm', () => {
       8,
       30,
       [],
-      [
-        'FOX',
-        'APOSTATE',
-        'WOLF',
-        'FANATIC',
-        'MADMAN',
-        'SEER',
-        'MEDIUM',
-        'HUNTER',
-        'CAT',
-        'MASON',
-        'VILLAGER',
-      ],
+      [],
     )
   })
 })

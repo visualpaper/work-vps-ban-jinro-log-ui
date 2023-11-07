@@ -58,17 +58,17 @@ export const SearchForm: React.FC<{
   })
   const [selectCast, setSelectCast] = useState<string>('')
   const [selectPositions, setSelectPositions] = useState<SelectPosition>({
-    fox: true,
-    apostate: true,
-    wolf: true,
-    fanatic: true,
-    madman: true,
-    seer: true,
-    medium: true,
-    hunter: true,
-    cat: true,
-    mason: true,
-    villager: true,
+    fox: false,
+    apostate: false,
+    wolf: false,
+    fanatic: false,
+    madman: false,
+    seer: false,
+    medium: false,
+    hunter: false,
+    cat: false,
+    mason: false,
+    villager: false,
   })
 
   const handleClear = (
@@ -76,17 +76,17 @@ export const SearchForm: React.FC<{
   ) => {
     setSelectCast('')
     setSelectPositions({
-      fox: true,
-      apostate: true,
-      wolf: true,
-      fanatic: true,
-      madman: true,
-      seer: true,
-      medium: true,
-      hunter: true,
-      cat: true,
-      mason: true,
-      villager: true,
+      fox: false,
+      apostate: false,
+      wolf: false,
+      fanatic: false,
+      madman: false,
+      seer: false,
+      medium: false,
+      hunter: false,
+      cat: false,
+      mason: false,
+      villager: false,
     })
     reset()
   }
