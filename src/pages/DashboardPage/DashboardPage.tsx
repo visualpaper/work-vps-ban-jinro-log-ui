@@ -144,7 +144,7 @@ export const DashboardPage: React.FC = () => {
             <Link to="https://ruru-jinro.net/" target="_blank">
               人狼ゲーム るる鯖
             </Link>
-            の過去ログから、荒らし行為によって廃村になったログをまとめています。
+            の過去ログから、荒らし行為によって通報があったログをまとめています。
             <br />
             荒らしプレイヤーを確認する際にご利用いただければ幸いです。
           </Box>
