@@ -101,7 +101,7 @@ export const SearchPage: React.FC = () => {
     () => [
       {
         header: 'No.',
-        size: 30,
+        size: 25,
         accessorKey: 'number',
       },
       {
@@ -143,7 +143,7 @@ export const SearchPage: React.FC = () => {
       },
       {
         header: '役職',
-        size: 40,
+        size: 25,
         cell: ({ row }) => {
           return (
             <>

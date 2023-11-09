@@ -56,7 +56,7 @@ export const DashboardPage: React.FC = () => {
     () => [
       {
         header: 'No.',
-        size: 30,
+        size: 25,
         accessorKey: 'number',
       },
       {
@@ -98,7 +98,7 @@ export const DashboardPage: React.FC = () => {
       },
       {
         header: '役職',
-        size: 40,
+        size: 25,
         cell: ({ row }) => {
           return (
             <>
