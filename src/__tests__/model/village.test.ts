@@ -61,6 +61,11 @@ describe('formatEndDate', () => {
       '2020/10/14 16:28:05(水)',
     )
   })
+  test('formatEndDate - 3/31 正常系', () => {
+    expect(formatEndDate('2014-03-31T22:10:29Z')).toBe(
+      '2014/03/31 22:10:29(月)',
+    )
+  })
 
   test('formatEndDate - 異常系', () => {
     expect(() => formatEndDate('aaa')).toThrow(/Invalid Date/)

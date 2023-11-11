@@ -57,7 +57,7 @@ export const formatEndDate = (dateString: string): string => {
   if (isNaN(date.getTime())) {
     throw Error('Invalid Date')
   }
-  return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(
+  return `${date.getFullYear()}/${String(date.getUTCMonth() + 1).padStart(
     2,
     '0',
   )}/${String(date.getUTCDate()).padStart(2, '0')} ${String(
