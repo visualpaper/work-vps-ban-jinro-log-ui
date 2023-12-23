@@ -31,27 +31,34 @@ const createdByStyle: SxProps<Theme> = {
 // eslint-disable-next-line unused-imports/no-unused-vars
 export const DashboardPage: React.FC = () => {
   const { user } = useContext(UserContext)
-  const [submitted, setSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()
-  const { data: villagesData, isFetching: villagesIsFetching } =
-    useListVillagesQuery<ListVillagesQuery>(
-      graphqlRequestClient,
-      // variable が変化しない都合上
-      // F5 での更新時に onError に来ない？ように見える。
-      // 仕様かもしれないので、挙動だけ覚えておく。
-      {
-        input: {
-          position: [],
-          cast: [],
-        },
+  const [submitted, setSubmitted] = useState<boolean>(false)
+  const [villagesData, setVillagesData] = useState<ListVillagesQuery | null>(
+    null,
+  )
+  useListVillagesQuery<ListVillagesQuery>(
+    graphqlRequestClient,
+    // variable が変化しない都合上
+    // F5 での更新時に onError に来ない？ように見える。
+    // 仕様かもしれないので、挙動だけ覚えておく。
+    {
+      input: {
+        position: [],
+        cast: [],
       },
-      {
-        enabled: submitted, // 表示時に実行でなく user 取得後実施
-        onError: defaultOnError,
-        useErrorBoundary: defaultUseErrorBoundary,
-        suspense: false,
+    },
+    {
+      enabled: submitted, // 表示時に実行でなく user 取得後実施
+      onSuccess: (data: ListVillagesQuery) => {
+        // 自動で読み込みが走らないように無効化
+        setSubmitted(false)
+        setVillagesData(data!)
       },
-    )
+      onError: defaultOnError,
+      useErrorBoundary: defaultUseErrorBoundary,
+      suspense: false,
+    },
+  )
 
   const columns = useMemo<ColumnDef<Village | any>[]>(
     () => [
@@ -121,7 +128,7 @@ export const DashboardPage: React.FC = () => {
     setSubmitted(true)
   }, [])
 
-  if (villagesIsFetching) {
+  if (!villagesData) {
     return <Fragment />
   }
 
