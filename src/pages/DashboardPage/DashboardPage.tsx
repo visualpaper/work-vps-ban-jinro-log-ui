@@ -2,7 +2,7 @@ import { Box, Grid, SxProps, Theme } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserContext } from '../UserContext'
 import { graphqlRequestClient } from '../../common/client'
-import { Fragment, useContext, useEffect, useMemo } from 'react'
+import { Fragment, useContext, useEffect, useMemo, useState } from 'react'
 import {
   ListVillagesQuery,
   Village,
@@ -31,6 +31,7 @@ const createdByStyle: SxProps<Theme> = {
 // eslint-disable-next-line unused-imports/no-unused-vars
 export const DashboardPage: React.FC = () => {
   const { user } = useContext(UserContext)
+  const [submitted, setSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()
   const { data: villagesData, isFetching: villagesIsFetching } =
     useListVillagesQuery<ListVillagesQuery>(
@@ -45,7 +46,7 @@ export const DashboardPage: React.FC = () => {
         },
       },
       {
-        enabled: true, // 表示時に実行
+        enabled: submitted, // 表示時に実行でなく user 取得後実施
         onError: defaultOnError,
         useErrorBoundary: defaultUseErrorBoundary,
         suspense: false,
@@ -117,6 +118,7 @@ export const DashboardPage: React.FC = () => {
     if (!user) {
       navigate('/')
     }
+    setSubmitted(true)
   }, [])
 
   if (villagesIsFetching) {
